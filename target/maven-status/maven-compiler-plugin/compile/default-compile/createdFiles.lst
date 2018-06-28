@@ -1,7 +1,0 @@
-com\skyworth\service\serviceImpl\UserServiceImpl.class
-com\skyworth\entity\User.class
-com\skyworth\exceptionhandler\GolbalExceptionHandler.class
-com\skyworth\mapper\UserMapper.class
-com\skyworth\controller\UserController.class
-com\skyworth\startcontroller\Application.class
-com\skyworth\service\UserService.class
