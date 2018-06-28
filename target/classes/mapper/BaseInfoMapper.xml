@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->
+<mapper namespace="com.skyworth.mapper.BaseInfoMapper">
+	<resultMap id="BaseResultMap" type="com.skyworth.entity.Parameter">
+		<id column="code_id" property="codeId" jdbcType="INTEGER" />
+		<result column="code_type" property="codeType" jdbcType="VARCHAR" />
+		<result column="code_type_name" property="codeTypeName" jdbcType="VARCHAR" />
+		<result column="code_code" property="codeCode" jdbcType="VARCHAR" />
+		<result column="code_name" property="codeName" jdbcType="VARCHAR" />
+		<result column="code_desc" property="codeDesc" jdbcType="VARCHAR" />
+		<result column="code_seq" property="codeSeq" jdbcType="INTEGER" />
+		<result column="isenable" property="isenable" jdbcType="INTEGER" />
+	</resultMap>
+	<!-- query parameter list -->
+	<select id="queryParameterList" resultMap="BaseResultMap" parameterType="Map">
+		SELECT 
+		a.code_id,a.code_type,b.code_name as code_type_name,a.code_code,a.code_name,a.code_desc,a.code_seq,a.isenable
+		FROM tvso_parameter_code a
+		INNER JOIN tvso_parameter_code b ON b.code_code = a.code_type AND b.code_type='base_type'
+		WHERE 1=1
+		<if test="codeType != null and codeType != ''"> AND a.code_type = #{codeType}</if>
+		<if test="codeName != null and codeName != ''"> AND a.code_name = #{codeName}</if>
+		ORDER BY a.code_type , a.code_seq ASC
+	</select>
+	
+	<!-- find parameter by id -->
+	<select id="findParameterById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		code_id,code_type,code_code,code_name,code_desc,code_seq,isenable
+		FROM tvso_parameter_code
+		WHERE code_id = #{codeId}
+	</select>
+
+	<!-- add parameterCode -->
+	<insert id="addParameterCode" parameterType="com.skyworth.entity.Parameter">
+		INSERT INTO tvso_parameter_code
+		(code_type,code_code,code_name,code_desc,code_seq)
+		VALUES
+		(#{codeType},#{codeCode},#{codeName},#{codeDesc},#{codeSeq})
+	</insert>
+
+	<!-- update parameterCode -->
+	<update id="updateParameterCode" parameterType="com.skyworth.entity.Parameter">
+		UPDATE tvso_parameter_code
+		SET code_name =
+		#{codeName},
+		code_desc = #{codeDesc},
+		code_seq = #{codeSeq}
+		WHERE code_type = #{codeType} AND
+		code_code = #{codeCode}
+	</update>
+
+	<!-- delete parameterCode -->
+	<delete id="deleteParameterCode" parameterType="java.util.Map">
+		DELETE FROM tvso_parameter_code
+		WHERE
+		code_type = #{codeType} AND code_code = #{codeCode}
+	</delete>
+	
+	<!-- unable parameterCode -->
+	<update id="unableParameterCode" parameterType="java.util.Map">
+		UPDATE tvso_parameter_code
+		SET isenable = 0,
+		modtime = now()
+		WHERE code_type = #{codeType} AND code_code = #{codeCode}
+	</update>
+	
+	<!-- effect parameterCode -->
+	<update id="effectParameterCode" parameterType="java.util.Map">
+		UPDATE tvso_parameter_code
+		SET isenable = 1,
+		modtime = now()
+		WHERE code_type = #{codeType} AND code_code = #{codeCode}
+	</update>
+</mapper>

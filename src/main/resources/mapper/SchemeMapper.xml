@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 指定工作空间，要与接口名相同，源代码没有去看，猜测应该是通过"这里的namespace.下边方法的id"来定位方法的 -->
+<mapper namespace="com.skyworth.mapper.SchemeMapper">
+	<resultMap id="BaseResultMap" type="com.skyworth.entity.Scheme">
+		<id column="tose_id" property="toseId" jdbcType="INTEGER" />
+		<result column="tose_code" property="toseCode" jdbcType="VARCHAR" />
+		<result column="tose_name" property="toseName" jdbcType="VARCHAR" />
+		<result column="tose_equipment_core" property="toseEquipmentCore" jdbcType="VARCHAR" />
+		<result column="tose_equipment_type" property="toseEquipmentType" jdbcType="VARCHAR" />
+		<result column="tose_equipment_country" property="toseEquipmentCountry" jdbcType="VARCHAR" />
+		<result column="tose_language" property="toseLanguage" jdbcType="VARCHAR" />
+		<result column="tose_level" property="toseLevel" jdbcType="INTEGER" />
+		<result column="tose_version" property="toseVersion" jdbcType="VARCHAR" />
+		<result column="tose_union_cust" property="toseUnionCust" jdbcType="VARCHAR" />
+		<result column="tose_remark" property="toseRemark" jdbcType="VARCHAR" />
+		<result column="tose_status" property="toseStatus" jdbcType="INTEGER" />
+		<result column="isenable" property="isenable" jdbcType="INTEGER" />
+		<collection property="schemeDetail" ofType="BaseResultMapD" column="tose_id" select="findSchemeDById">	
+		</collection>
+	</resultMap>
+	
+	<resultMap id="BaseResultMapD" type="com.skyworth.entity.SchemeDetail">
+		<id column="tosd_id" property="tosdId" jdbcType="INTEGER" />
+		<result column="tosd_tose_id" property="tosdToseId" jdbcType="INTEGER" />
+		<result column="tosd_model_id" property="tosdModelId" jdbcType="INTEGER" />
+		<result column="tosd_model_order" property="tosdModelOrder" jdbcType="INTEGER" />
+		<result column="tosd_ref_type" property="tosdRefType" jdbcType="VARCHAR" />
+		<result column="tosd_ref_id" property="tosdRefId" jdbcType="VARCHAR" />
+		<collection property="tosdRefUrlList"  ofType="String" column="{type=tosd_ref_type,id=tosd_ref_id}" select="queryTosdRefUrl">
+		</collection>
+	</resultMap>
+
+	<!-- query scheme list -->
+	<select id="querySchemeList" resultType="HashMap" parameterType="Map">
+		SELECT
+		tose_id as toseId,tose_code as toseCode,tose_name as toseName,
+		tose_level as toseLevel,tose_version as toseVersion,
+		(case when tour.tour_name is null then '系统' else tour.tour_name end) as toseUnionCustName,
+		m.isenable,m.tose_status,code.code_name as tose_status_name
+		FROM tvso_scheme m
+		INNER JOIN tvso_parameter_code code ON code.code_code = m.tose_status AND code.code_type = 'status'
+		LEFT JOIN tvso_user tour ON tour.tour_id = tose_union_cust
+		WHERE 1=1
+		<if test="toseCode != null and toseCode != ''"> AND tose_code LIKE CONCAT(#{toseCode},'%')</if>
+		<if test="toseName != null and toseName != ''"> AND tose_name LIKE CONCAT(#{toseName},'%')</if>
+		<if test="toseEquipmentCountry != null and toseEquipmentCountry != ''"> AND tose_equipment_country = #{toseEquipmentCountry}</if>
+		ORDER BY FIELD('tose_status',2,1,3,4),tose_code DESC
+	</select>
+
+	<!-- query scheme by id -->
+	<select id="findSchemeById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		tose_id,tose_code,tose_name,tose_equipment_core,tose_equipment_type,tose_equipment_country,
+		tose_language,tose_level,tose_version,tose_union_cust,tose_remark,tose_status,isenable
+		FROM
+		tvso_scheme
+		WHERE tose_id = #{toseId}
+	</select>
+
+	<!-- query scheme_d by id -->
+	<select id="findSchemeDById" resultMap="BaseResultMapD" parameterType="java.lang.Integer">
+		SELECT
+		tosd_id ,tosd_tose_id ,tosd_model_id ,tosd_model_order,tosd_ref_type ,tosd_ref_id
+		FROM tvso_scheme_d tosd
+		WHERE tosd_tose_id = #{toseId}
+	</select>
+	
+	<!-- query scheme_d refurl by type and id -->
+	<select id="queryTosdRefUrl" resultType="String" parameterType="Map">
+		SELECT tosdRefUrlList FROM (
+		SELECT '1' as refType,tomd_id as refId,tomd_poster_url as tosdRefUrlList
+		FROM tvso_material_data a
+		WHERE a.isenable = 1
+		UNION ALL 
+		SELECT '2' as refType,toan_id as refId,toan_icon as tosdRefUrlList
+		FROM tvso_application b
+		WHERE b.isenable = 1 AND b.toan_status = 3) t
+        <foreach collection="id.split(',')"  item="id" index="i" open="WHERE (" close=")" separator="OR" >
+            (refId = ${id} AND refType = substring_index(substring_index('${type}',',', ${i} + 1), ',', -1))
+        </foreach>
+         GROUP BY FIELD(t.`refId`, 
+        <foreach item="id" collection="id.split(',')" separator="," >
+            ${id}
+        </foreach> )
+	</select>
+
+	<!-- add scheme_m -->
+	<insert id="addScheme" parameterType="com.skyworth.entity.Scheme" useGeneratedKeys="true"
+		keyProperty="toseId">
+		INSERT INTO tvso_scheme
+		(tose_code,tose_name,tose_equipment_core,tose_equipment_type,tose_equipment_country,
+		tose_language,tose_level,tose_version,tose_union_cust,tose_remark,tose_status,adduser)
+		VALUES
+		(#{toseCode},#{toseName},#{toseEquipmentCore},#{toseEquipmentType},#{toseEquipmentCountry},
+		#{toseLanguage},#{toseLevel},#{toseVersion},#{toseUnionCust},#{toseRemark},#{toseStatus},#{addUser})
+	</insert>
+
+	<!-- add scheme_d -->
+	<insert id="addSchemeDetail" parameterType="java.util.List">
+		INSERT INTO tvso_scheme_d
+		(tosd_tose_id,tosd_model_id,tosd_model_order,tosd_ref_type,tosd_ref_id)
+		VALUES
+		<!--item就是List里每一项的对象名，要用","分割每一条数据，最后要";"结尾 -->
+		<foreach collection="list" item="tosd" index="index" separator="," close=";">
+			(#{tosd.tosdToseId,jdbcType=INTEGER}, #{tosd.tosdModelId,jdbcType=INTEGER},
+			#{tosd.tosdModelOrder,jdbcType=INTEGER}, #{tosd.tosdRefType,jdbcType=VARCHAR}, #{tosd.tosdRefId,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<!-- update scheme -->
+	<update id="updateScheme" parameterType="com.skyworth.entity.Scheme">
+		UPDATE tvso_scheme
+		SET tose_equipment_core = #{toseEquipmentCore},
+		tose_equipment_type = #{toseEquipmentType},
+		tose_equipment_country = #{toseEquipmentCountry},
+		tose_language = #{toseLanguage},
+		tose_level = #{toseLevel},
+		tose_version = #{toseVersion},
+		tose_union_cust = #{toseUnionCust},
+		tose_remark = #{toseRemark},
+		modtime = now()
+		WHERE tose_id = #{toseId}
+	</update>
+	
+	<!-- update scheme_d -->
+	<update id="updateSchemeDetail" parameterType="com.skyworth.entity.SchemeDetail">
+		UPDATE tvso_scheme_d
+		SET tosd_model_order = #{tosdModelOrder},
+		tosd_ref_type = #{tosdRefType},
+		tosd_ref_id = #{tosdRefId}
+		WHERE tosd_id = #{tosdId}
+	</update>
+	
+	<!-- delete scheme -->
+	<delete id="deleteScheme" parameterType="java.lang.Integer">
+		DELETE FROM tvso_scheme
+		WHERE tose_id = #{toseId}
+	</delete>
+	
+	<!-- delete scheme_d -->
+	<delete id="deleteSchemeDetail" parameterType="java.lang.Integer">
+		DELETE FROM tvso_scheme_d
+		WHERE tosd_tose_id = #{toseId}
+	</delete>
+	
+	<!-- unable scheme -->
+	<update id="unableScheme" parameterType="java.lang.Integer">
+		UPDATE tvso_scheme
+		SET isenbale = 0,
+		modtime = now()
+		WHERE tose_id = #{toseId}
+	</update>
+	
+	<!-- effect scheme -->
+	<update id="effectScheme" parameterType="java.lang.Integer">
+		UPDATE tvso_scheme
+		SET isenbale = 1,
+		modtime = now()
+		WHERE tose_id = #{toseId}
+	</update>
+	
+	<!-- get scheme name suggest list -->
+	<select id="GetSchemeNameSug" parameterType="java.lang.String" resultType="HashMap">
+		SELECT  tose_code as toseCode,tose_name as toseName
+		FROM tvso_scheme
+		WHERE 1=1
+		<if test="_parameter != null and _parameter != ''">  
+		AND tose_name LIKE CONCAT(#{_parameter},'%')</if> 
+		<if test="_parameter == null or _parameter == ''"> limit 10</if>
+	</select>
+	
+	<!-- get scheme cust suggest list -->
+	<select id="GetSchemeCustSug" parameterType="java.lang.String" resultType="HashMap">
+		SELECT distinct tose_union_cust as toseUnionCust ,
+		(case when tose_union_cust = 'system' then '系统' else tour.tour_name end) as toseUnionCustName
+		FROM tvso_scheme m
+		LEFT JOIN tvso_user tour ON tour.tour_id = tose_union_cust
+		WHERE tose_union_cust != '' AND  tose_union_cust = 'system'
+		<if test="_parameter != null and _parameter != ''">  
+		AND (case when tose_union_cust = 'system' then '系统' else tour.tour_name end) LIKE CONCAT(#{_parameter},'%')</if> 
+		<if test="_parameter == null or _parameter == ''"> limit 10</if> 	
+	</select>
+	
+	<!-- get scheme fill material -->
+	<select id="GetSchemeFillMaterial" resultType="HashMap" parameterType="Map">
+		SELECT materialId,materialType,materialTypeName,materialName,materialIcon,materialRemark FROM(
+		SELECT tomd_id as materialId,1 as materialType,'普通素材' as materialTypeName,tomd_name as materialName,
+		tomd_poster_url as materialIcon,tomd_remark as materialRemark
+		FROM tvso_material_data a
+		WHERE a.isenable = 1
+		UNION ALL
+		SELECT toan_id as materialId,2 as materialType,'应用' as materialTypeName,toan_name as materialName,
+		toan_icon as materialIcon,toan_remark as materialRemark
+		FROM tvso_application b
+		WHERE b.isenable = 1 AND b.toan_status = 3) t
+		WHERE 1=1
+		<if test="materialType != null and materialType != ''">AND materialType = #{materialType}</if>
+		<if test="materialName != null and materialName != ''">AND materialName LIKE CONCAT(#{materialName},'%')</if>
+	</select>
+</mapper>
