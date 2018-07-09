@@ -30,8 +30,6 @@ public enum ResultEnum {
     UploadSuccess("0006","上传成功！"),
     NoDataSuccess("0007","没有查询到数据！"),
     AdminSuccess("0008","登入成功！"),
-    UpSuccess("0009","上架成功！"),
-    DownSuccess("0010","下架成功！"),
     /**
      * 未知异常. ErrorCode : 01
      */
@@ -58,8 +56,6 @@ public enum ResultEnum {
     UnknowEquipException("0405","该设备信息不存在！"),
     UnknowSchemeException("0406","该方案信息不存在！"),
     UnknowMaterialException("0407","该素材信息不存在！"),
-    
-    ExistsEquipException("0408","该设备已存在！"),
     
     /**
      * 数据库操作异常. ErrorCode : 05

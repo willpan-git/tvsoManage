@@ -115,10 +115,10 @@ public class ShiroConfig {
 	securityManager.setRealm(myRealm);
 
 	// 自定义缓存实现 使用redis
-	securityManager.setCacheManager(cacheManager());
+	//securityManager.setCacheManager(cacheManager());
 	
 	// 自定义session管理 使用redis
-	securityManager.setSessionManager(sessionManager());
+	//securityManager.setSessionManager(sessionManager());
 
 	return securityManager;
     }
@@ -156,7 +156,7 @@ public class ShiroConfig {
      * 
      * @return
      */
-    @Bean(name = "lifecycleBeanPostProcessor")
+    @Bean
     public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 	return new LifecycleBeanPostProcessor();
     }

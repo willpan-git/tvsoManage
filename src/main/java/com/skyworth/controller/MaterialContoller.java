@@ -54,10 +54,10 @@ public class MaterialContoller {
 	int pageNum = 1;
 	int pageSize = 10;
 	if (map != null && map.get("pageNum") != null) {
-	    pageNum = Integer.parseInt(map.get("pageNum").toString());
+	    pageNum = (int) map.get("pageNum");
 	}
 	if (map != null && map.get("pageSize") != null) {
-	    pageSize = Integer.parseInt(map.get("pageSize").toString());
+	    pageSize = (int) map.get("pageSize");
 	}
 
 	PageHelper.startPage(pageNum, pageSize);

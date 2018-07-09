@@ -9,7 +9,6 @@
 		<result column="toei_equipment_core" property="toeiEquipmentCore" jdbcType="VARCHAR" />
 		<result column="toei_equipment_type" property="toeiEquipmentType" jdbcType="VARCHAR" />
 		<result column="toei_equipment_country" property="toeiEquipmentCountry" jdbcType="VARCHAR" />
-		<result column="toei_equipment_country_name" property="toeiEquipmentCountryName" jdbcType="VARCHAR" />
 		<result column="toei_default_scheme" property="toeiDefaultScheme" jdbcType="INTEGER" />
 		<result column="toei_default_schemename" property="toeiDefaultSchemeName" jdbcType="VARCHAR" />
 		<result column="toei_useing_scheme" property="toeiUseingScheme" jdbcType="INTEGER" />
@@ -21,18 +20,15 @@
 		SELECT
 		toei_id,
 		toei_equipment_name,toei_equipment_code,toei_equipment_core,toei_equipment_type,toei_equipment_country,
-		code.code_name as toei_equipment_country_name,
 		toei_default_scheme,tose.tose_name as toei_default_schemename,
-		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable,toei_remark
+		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable
 
 		FROM tvso_equipment_info toei
-		INNER JOIN tvso_parameter_code code ON code.code_code = toei.toei_equipment_country AND code.code_type = 'country'
 		LEFT JOIN tvso_scheme tose ON tose.tose_id = toei.toei_default_scheme
 		LEFT JOIN tvso_scheme tose2 ON tose2.tose_id = toei.toei_useing_scheme
 		WHERE 1=1
 		<if test="toeiEquipmentName != null and toeiEquipmentName != ''"> AND toei_equipment_name LIKE CONCAT(#{toeiEquipmentName},'%')</if>
 		<if test="toeiEquipmentCode != null and toeiEquipmentCode != ''"> AND toei_equipment_code LIKE CONCAT(#{toeiEquipmentCode},'%')</if>
-		<if test="toeiEquipmentCountry != null and toeiEquipmentCountry != ''"> AND toei_equipment_country = #{toeiEquipmentCountry}</if>
 		ORDER BY toei_equipment_code DESC
 	</select>
 	
@@ -42,7 +38,7 @@
 		toei_id,
 		toei_equipment_name,toei_equipment_code,toei_equipment_core,toei_equipment_type,toei_equipment_country,
 		toei_default_scheme,tose.tose_name as toei_default_schemename,
-		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable,toei_remark
+		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable
 
 		FROM tvso_equipment_info toei
 		LEFT JOIN tvso_scheme tose ON tose.tose_id = toei.toei_default_scheme
@@ -53,10 +49,7 @@
 	<!-- update equip -->
 	<update id="updateEquip" parameterType="com.skyworth.entity.Equip">
 		UPDATE tvso_equipment_info
-		SET 
-		toei_equipment_code = #{toeiEquipmentCode},
-		toei_equipment_name = #{toeiEquipmentName},
-		toei_remark = #{toeiRemark},
+		SET toei_remark = #{toeiRemark},
 		toei_default_scheme = #{toeiDefaultScheme},
 		toei_useing_scheme = #{toeiUseingScheme},
 		modtime = now()
@@ -110,9 +103,9 @@
 	<select id="getDefaultScheme" resultType="java.util.HashMap" parameterType="java.util.Map">
 		SELECT tose_id as toseId, tose_name as toseName
 		FROM tvso_scheme
-		WHERE tose_equipment_core = #{toeiEquipmentCore}
-		AND tose_equipment_type = #{toeiEquipmentType}
-		AND tose_equipment_country = #{toeiEquipmentCountry}
+		WHERE tose_equipment_core = #{toei_equipment_code}
+		AND tose_equipment_type = #{toei_equipment_type}
+		AND tose_equipment_country = #{toei_equipment_country}
 		ORDER BY tose_version DESC, tose_level DESC
 		limit 1
 	</select>
@@ -122,18 +115,10 @@
 		SELECT tose_id as toseId, CONCAT(tose_name,'(版本：',tose_version,',优先级：tose_level' ,')') as toseName
 		FROM tvso_scheme
 		WHERE isenable = 1
-		AND tose_equipment_core = #{toeiEquipmentCore}
-		AND tose_equipment_type = #{toeiEquipmentType}
-		AND tose_equipment_country = #{toeiEquipmentCountry}
+		AND tose_equipment_core = #{toei_equipment_code}
+		AND tose_equipment_type = #{toei_equipment_type}
+		AND tose_equipment_country = #{toei_equipment_country}
 		ORDER BY tose_version DESC, tose_level DESC
 		limit 1
-	</select>
-	
-	<!-- check equip exists -->
-	<select id="checkEquipExists" resultType="java.lang.String" parameterType="java.util.Map">
-		SELECT toei_equipment_code FROM tvso_equipment_info
-		WHERE toei_equipment_core = #{toeiEquipmentCore}
-		AND toei_equipment_type = #{toeiEquipmentType}
-		AND toei_equipment_country = #{toeiEquipmentCountry}
 	</select>
 </mapper>

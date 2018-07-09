@@ -56,10 +56,10 @@ public class EquipController {
 	int pageNum = 1;
 	int pageSize = 10;
 	if (map != null && map.get("pageNum") != null) {
-	    pageNum = Integer.parseInt(map.get("pageNum").toString());
+	    pageNum = (int) map.get("pageNum");
 	}
 	if (map != null && map.get("pageSize") != null) {
-	    pageSize = Integer.parseInt(map.get("pageSize").toString());
+	    pageSize = (int) map.get("pageSize");
 	}
 
 	PageHelper.startPage(pageNum, pageSize);
@@ -73,21 +73,12 @@ public class EquipController {
     @ApiImplicitParam(name = "equip", value = "设备详细实体equip", required = true, dataType = "Equip")
     @RequestMapping(value = { "/addEquip" }, method = RequestMethod.POST)
     public void addEquip(@RequestBody(required = true) Equip equip) {
-	// 新增时判断设备是否存在
-	String toeiEquipmentCore = equip.getToeiEquipmentCore();
-	String toeiEquipmentType = equip.getToeiEquipmentType();
-	String toeiEquipmentCountry = equip.getToeiEquipmentCountry();
-	String equipTemp = equipService.checkEquipExists(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
-	if (equipTemp != null && equipTemp != "") {
-	    throw new MyException(ResultEnum.ExistsEquipException);
-	} else {
-	    // 调用新增方法
-	    equipService.addEquip(equip);
-	    // 新增成功后打印日志信息
-	    LogUtil.printLog("新增设备成功!设备名称:" + equip.getToeiEquipmentName() + " 设备编码:" + equip.getToeiEquipmentCode());
-	    // 新增成功提示信息(从枚举类里获取)
-	    throw new MyException(ResultEnum.AddSuccess);
-	}
+	// 调用新增方法
+	equipService.addEquip(equip);
+	// 新增成功后打印日志信息
+	LogUtil.printLog("新增设备成功!设备名称:" + equip.getToeiEquipmentName() + " 设备编码:" + equip.getToeiEquipmentCode());
+	// 新增成功提示信息(从枚举类里获取)
+	throw new MyException(ResultEnum.AddSuccess);
     }
 
     // 修改设备
@@ -124,8 +115,8 @@ public class EquipController {
 	    throw new MyException(ResultEnum.UnableSuccess);
 	}
     }
-
-    // 生效设备
+    
+ // 生效设备
     @ApiOperation(value = "使设备生效", notes = "根据设备编码生效设备")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Int", paramType = "query")
     @RequestMapping(value = { "/effectEquip" }, method = RequestMethod.POST)
@@ -156,7 +147,7 @@ public class EquipController {
 	    throw new MyException(ResultEnum.DeleteSuccess);
 	}
     }
-
+    
     // 根据设备id查询设备相关信息
     @ApiOperation(value = "根据设备id查询设备相关信息", notes = "根据设备id查询设备相关信息")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Int", paramType = "query")
@@ -173,9 +164,9 @@ public class EquipController {
     // 根据 机芯+机型+使用国家 自动获取优先级最高的默认设置方案
     @ApiOperation(value = "获取默认设置方案", notes = "根据 机芯+机型+使用国家 自动获取优先级最高的默认设置方案")
     @ApiImplicitParams({
-	    @ApiImplicitParam(name = "toeiEquipmentCore", value = "设备机芯", required = true, dataType = "String", paramType = "query"),
-	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String", paramType = "query"),
-	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String", paramType = "query") })
+	    @ApiImplicitParam(name = "toeiEquipmentCore", value = "设备机芯", required = true, dataType = "String"),
+	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String"),
+	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String") })
     @RequestMapping(value = { "/getDefaultScheme" }, method = RequestMethod.GET)
     public Map<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType,
 	    String toeiEquipmentCountry) {
@@ -187,9 +178,9 @@ public class EquipController {
     // 根据 机芯+机型+使用国家 自动获取设置方案列表
     @ApiOperation(value = "获取设置方案列表", notes = "根据 机芯+机型+使用国家 自动获取有效的设置方案列表")
     @ApiImplicitParams({
-	    @ApiImplicitParam(name = "toeiEquipmentCore", value = "设备机芯", required = true, dataType = "String", paramType = "query"),
-	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String", paramType = "query"),
-	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String", paramType = "query") })
+	    @ApiImplicitParam(name = "toeiEquipmentCore", value = "设备机芯", required = true, dataType = "String"),
+	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String"),
+	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String") })
     @RequestMapping(value = { "/getSchemeList" }, method = RequestMethod.GET)
     public Map<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType,
 	    String toeiEquipmentCountry) {

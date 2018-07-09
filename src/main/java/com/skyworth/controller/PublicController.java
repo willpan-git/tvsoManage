@@ -49,7 +49,6 @@ import io.swagger.annotations.ApiParam;
  */
 @Api(value = "API - PublicController", protocols = "json", tags = "Public")
 @RestController
-@RequestMapping("/public")
 public class PublicController {
     @Autowired
     private PublicService publicService;
@@ -64,7 +63,7 @@ public class PublicController {
 
     // 下拉框数据源
     @ApiOperation(value = "查询下拉框数据", notes = "根据数据类型查询下拉框数据源")
-    @ApiImplicitParam(name = "codeType", value = "参数类型", required = true, dataType = "String", paramType = "query")
+    @ApiImplicitParam(name = "codeType", value = "参数类型", required = true, dataType = "String")
     @RequestMapping(value = { "/queryBaseType" }, method = RequestMethod.GET)
     public List<Map<String, String>> queryBaseType(String codeType) {
 	return publicService.queryBaseType(codeType);
@@ -99,7 +98,7 @@ public class PublicController {
 	String filePath = loadpath +"/"+ df.format(calendar.getTime()) +"/";
 	
 	// 获得文件后缀
-	String suf = file.getOriginalFilename().split("\\.")[file.getOriginalFilename().split("\\.").length - 1];
+	String suf = file.getOriginalFilename().split("\\.")[1];
 	// 保存时的文件名(随机数加后缀名)
         String filename = UUID.randomUUID()+"."+suf;
         

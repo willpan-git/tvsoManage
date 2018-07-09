@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.alibaba.druid.wall.WallConfig;
-import com.alibaba.druid.wall.WallFilter;
 
 /**
  * Copyright: Copyright (c) 2018 skyworth
@@ -54,18 +52,5 @@ public class DruidConfig {
 	filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
 	return filterRegistrationBean;
     }
-    @Bean
-    public WallFilter wallFilter(){
-        WallFilter wallFilter = new WallFilter();
-        wallFilter.setConfig(wallConfig());
-        return wallFilter;
-    }
 
-    @Bean
-    public WallConfig wallConfig(){
-        WallConfig wallConfig = new WallConfig();
-        wallConfig.setMultiStatementAllow(true);//允许一次执行多条语句
-        wallConfig.setNoneBaseStatementAllow(true);//允许一次执行多条语句
-        return wallConfig;
-    }
 }

@@ -92,7 +92,6 @@
 		tour_telphone = #{tourTelphone},
 		tour_mail = #{tourMail},
 		tour_fox = #{tourFox},
-		isenable = #{isenable},
 		modtime = now(),
 		moduser = #{tourAccount}
 		WHERE tour_id = #{tourId}

@@ -27,25 +27,19 @@ public class Material {
     private Integer tomdId;
     @ApiModelProperty(value = "素材类型")
     private Integer tomdType;
-    @ApiModelProperty(value = "素材类型名称")
-    private String tomdTypeName;
     @ApiModelProperty(value = "标题名称")
     private String tomdName;
-    @ApiModelProperty(value = "布局")
+    @ApiModelProperty(value = "布局大小")
     private Integer tomdSize;
-    @ApiModelProperty(value = "布局名称")
-    private String tomdSizeName;
-    @ApiModelProperty(value = "海报储存url")
+    @ApiModelProperty(value = "海报存在url")
     private String tomdPosterUrl;
     @ApiModelProperty(value = "点击事件")
     private Integer tomdClickType;
-    @ApiModelProperty(value = "点击事件名称")
-    private String tomdClickTypeName;
     @ApiModelProperty(value = "点击内容")
     private String tomdClick;
     @ApiModelProperty(value = "素材版本")
     private String tomdVersion;
-    @ApiModelProperty(value = "素材描述")
+    @ApiModelProperty(value = "素材秒速")
     private String tomdRemark;
     @ApiModelProperty(value = "有效性")
     private Integer isenable;
@@ -74,18 +68,6 @@ public class Material {
         this.tomdType = tomdType;
     }
     /**
-     * @return the tomdTypeName
-     */
-    public String getTomdTypeName() {
-        return tomdTypeName;
-    }
-    /**
-     * @param tomdTypeName the tomdTypeName to set
-     */
-    public void setTomdTypeName(String tomdTypeName) {
-        this.tomdTypeName = tomdTypeName;
-    }
-    /**
      * @return the tomdName
      */
     public String getTomdName() {
@@ -110,18 +92,6 @@ public class Material {
         this.tomdSize = tomdSize;
     }
     /**
-     * @return the tomdSizeName
-     */
-    public String getTomdSizeName() {
-        return tomdSizeName;
-    }
-    /**
-     * @param tomdSizeName the tomdSizeName to set
-     */
-    public void setTomdSizeName(String tomdSizeName) {
-        this.tomdSizeName = tomdSizeName;
-    }
-    /**
      * @return the tomdPosterUrl
      */
     public String getTomdPosterUrl() {
@@ -144,18 +114,6 @@ public class Material {
      */
     public void setTomdClickType(Integer tomdClickType) {
         this.tomdClickType = tomdClickType;
-    }
-    /**
-     * @return the tomdClickTypeName
-     */
-    public String getTomdClickTypeName() {
-        return tomdClickTypeName;
-    }
-    /**
-     * @param tomdClickTypeName the tomdClickTypeName to set
-     */
-    public void setTomdClickTypeName(String tomdClickTypeName) {
-        this.tomdClickTypeName = tomdClickTypeName;
     }
     /**
      * @return the tomdClick
@@ -205,5 +163,5 @@ public class Material {
     public void setIsenable(Integer isenable) {
         this.isenable = isenable;
     }
-   
+    
 }

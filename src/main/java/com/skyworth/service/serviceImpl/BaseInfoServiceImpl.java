@@ -41,6 +41,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void addParameterCode(Parameter parameter) {
+	// TODO Auto-generated method stub
 	baseInfoMapper.addParameterCode(parameter);
     }
 
@@ -53,6 +54,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void updateParameterCode(Parameter parameter) {
+	// TODO Auto-generated method stub
 	baseInfoMapper.updateParameterCode(parameter);
     }
 
@@ -64,6 +66,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void unableParameterCode(Integer codeId) {
+	// TODO Auto-generated method stub
 	baseInfoMapper.unableParameterCode(codeId);
     }
 
@@ -75,6 +78,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void effectParameterCode(Integer codeId) {
+	// TODO Auto-generated method stub
 	baseInfoMapper.effectParameterCode(codeId);
     }
 
@@ -86,6 +90,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void deleteParameterCode(Integer codeId) {
+	// TODO Auto-generated method stub
 	baseInfoMapper.deleteParameterCode(codeId);
     }
 
@@ -97,6 +102,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public Parameter findParameterById(Integer codeId) {
+	// TODO Auto-generated method stub
 	return baseInfoMapper.findParameterById(codeId);
     }
 
@@ -107,6 +113,7 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public List<Parameter> queryParameterList(Map<String, Object> map) {
+	// TODO Auto-generated method stub
 	return baseInfoMapper.queryParameterList(map);
     }
 

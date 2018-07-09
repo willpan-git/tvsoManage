@@ -24,25 +24,23 @@ import com.skyworth.entity.Equip;
  *        Administrator v1.0.0 修改原因
  */
 public interface EquipService {
-    List<Equip> queryEquipList(Map<String, Object> map);
+    public List<Equip> queryEquipList(Map<String, Object> map);
 
-    Equip findEquipById(Integer toeiId);
+    public Equip findEquipById(Integer toeiId);
+    
+    public void addEquip(Equip equip);
 
-    void addEquip(Equip equip);
+    public void updateEquip(Equip equip);
 
-    void updateEquip(Equip equip);
+    public void unableEquip(Integer toeiId);
+    
+    public void effectEquip(Integer toeiId);
 
-    void unableEquip(Integer toeiId);
+    public void deleteEquip(Integer toeiId);
 
-    void effectEquip(Integer toeiId);
-
-    void deleteEquip(Integer toeiId);
-
-    HashMap<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
-
-    HashMap<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
-
-    List<Map<String, String>> queryEquipByKey(String keyWord);
-
-    String checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
+    public HashMap<String, Object> getDefaultScheme(String Core, String type, String country);
+    
+    public HashMap<String, Object> getSchemeList(String Core, String type, String country);
+    
+    public List<Map<String, String>> queryEquipByKey(String keyWord);
 }

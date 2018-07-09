@@ -8,17 +8,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skyworth.entity.Result;
 import com.skyworth.entity.ResultEnum;
 import com.skyworth.exception.MyException;
-import com.skyworth.util.ResultUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -60,7 +57,7 @@ public class UserLoginController {
 	    @ApiResponse(code=0403,message="用户名已被锁定或失效，请联系管理员！")
 	})
 	@RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-	public Result<Object> login(@RequestParam(value="account") String account, @RequestParam("password") String password) {
+	public void login(@RequestParam(value="account") String account, @RequestParam("password") String password) {
 		// 创建Subject实例
 		Subject subject = SecurityUtils.getSubject();
 
@@ -72,13 +69,10 @@ public class UserLoginController {
 			subject.login(token);
 			// 判断当前用户是否验证成功
 			if (subject.isAuthenticated() == true) {
-			    //获取用户session(如果当前用户没有session的话,true则创建一个并返回,false为返回null)
-			    Session session = subject.getSession(true);
-			    session.setAttribute("activeUser", account);
-			    // 登入成功
-			    ResultEnum resultEnum = ResultEnum.AdminSuccess;
-			    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), session.getId());
-			    //throw new MyException(ResultEnum.AdminSuccess);
+				// 登入成功
+				// throw new MyException(ResultEnum.SUCCESS);
+				// 返回欢迎页面
+			    throw new MyException(ResultEnum.AdminSuccess);
 			}
 
 		} catch (LockedAccountException e) {
@@ -90,7 +84,6 @@ public class UserLoginController {
 		} catch (Exception e) {
 			throw e;
 		}
-		 return ResultUtil.getSuccess("", "", null);
 	}
 
 //	@ApiOperation(value = "用户登出接口", notes = "用于页面跳转，跳转到登入的页面，无参数")

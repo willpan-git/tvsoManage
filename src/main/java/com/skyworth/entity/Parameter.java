@@ -27,8 +27,6 @@ public class Parameter {
     private Integer codeId;
     @ApiModelProperty(value = "参数类型")
     private String codeType;
-    @ApiModelProperty(value = "参数类型名称")
-    private String codeTypeName;
     @ApiModelProperty(value = "参数代码")
     private String codeCode;
     @ApiModelProperty(value = "参数名称")
@@ -64,19 +62,6 @@ public class Parameter {
      */
     public void setCodeType(String codeType) {
         this.codeType = codeType;
-    }
-    
-    /**
-     * @return the codeTypeName
-     */
-    public String getCodeTypeName() {
-        return codeTypeName;
-    }
-    /**
-     * @param codeTypeName the codeTypeName to set
-     */
-    public void setCodeTypeName(String codeTypeName) {
-        this.codeTypeName = codeTypeName;
     }
     /**
      * @return the codeCode

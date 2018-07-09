@@ -38,11 +38,9 @@ public interface EquipMapper {
 
     void deleteEquip(Integer toeiId);
 
-    HashMap<String, Object> getDefaultScheme(Map<String, Object> map);
+    HashMap<String, Object> getDefaultScheme(String Core, String type, String country);
     
-    HashMap<String, Object> getSchemeList(Map<String, Object> map);
+    HashMap<String, Object> getSchemeList(String Core, String type, String country);
     
     List<Map<String, String>> queryEquipByKey(String keyWord);
-    
-    String checkEquipExists(Map<String, Object> map);
 }

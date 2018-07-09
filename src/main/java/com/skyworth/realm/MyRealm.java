@@ -74,8 +74,9 @@ public class MyRealm extends AuthorizingRealm {
 		adminUser.getAdminPassword(), salt, realName);
 
 	// 5.当shiro验证成功，把用户信息放在session里
-	/*Session session = SecurityUtils.getSubject().getSession();  
-	session.setAttribute("activeUser", adminUser.getAdminAccount());  */
+//	Session session = SecurityUtils.getSubject().getSession();  
+//	       session.setAttribute("userSession", account);  
+//	       session.setAttribute("userSessionId", adminUser.);  
 
 	return authenticationInfo;
     }
