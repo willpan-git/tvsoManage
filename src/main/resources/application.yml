@@ -69,9 +69,7 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/*Mapper.xml
   type-aliases-package: com.skyworth.entity
-  configuration:
-    call-setters-on-nulls: true
-    return-instance-for-empty-row: true
+  config-location: classpath:mybatis-config.xml
 #日志配置
 logging:
   config: src\main\resources\logback-spring.xml
