@@ -31,6 +31,10 @@ public interface SchemeMapper {
     
     Scheme findSchemeById(Integer toseId);
     
+    List<HashMap<String, String>> GetSchemeNameSug(String toseName);
+    
+    List<HashMap<String, String>> GetSchemeCustSug(String custName);
+    
     void addScheme(Scheme scheme);
     
     void addSchemeDetail(ArrayList<SchemeDetail> list);
@@ -44,4 +48,6 @@ public interface SchemeMapper {
     void unableScheme(Integer toseId);
     
     void effectScheme(Integer toseId);
+    
+    List<HashMap<String, Object>> GetSchemeFillMaterial(Map<String, Object> map);
 }

@@ -24,18 +24,18 @@ import com.skyworth.util.ResultUtil;
  */
 @ControllerAdvice
 public class GolbalExceptionHandler {
-	@ExceptionHandler(RuntimeException.class)
-	@ResponseBody
-	public Result<?> exceptionHandler(Exception ex) {
+    @ExceptionHandler
+    @ResponseBody
+    public Result<?> exceptionHandler(Exception ex) {
 
-		if (ex instanceof MyException) {
-			MyException myException = (MyException) ex;
-			return ResultUtil.getError(myException.getCode(), myException.getMessage());
-		} else {
-			// 调用日志打印方法
-			LogUtil.printLog(ex, RuntimeException.class);
-			return ResultUtil.getError("-1", "系统错误，请稍后重试！");
-		}
-
+	 if (ex instanceof MyRuntimeException) {
+	    MyRuntimeException myRuntimeException = (MyRuntimeException) ex;
+	    return ResultUtil.getError(myRuntimeException.getCode(), myRuntimeException.getMessage());
+	} else {
+	    // 调用日志打印方法
+	    LogUtil.printLog(ex, RuntimeException.class);
+	    return ResultUtil.getError("-1", "系统错误，请稍后重试！");
 	}
+
+    }
 }

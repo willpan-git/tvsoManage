@@ -18,8 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.skyworth.entity.ResultEnum;
 import com.skyworth.entity.Scheme;
 import com.skyworth.entity.SchemeDetail;
-import com.skyworth.exception.MyException;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.mapper.SchemeMapper;
+import com.skyworth.service.ActivitiService;
 import com.skyworth.service.SchemeService;
 import com.skyworth.util.LogUtil;
 
@@ -41,6 +42,8 @@ import com.skyworth.util.LogUtil;
 public class SchemeServiceImpl implements SchemeService {
     @Autowired
     private SchemeMapper schemeMapper;
+    @Autowired
+    private ActivitiService activitiService;
 
     @Override
     public List<HashMap<String, Object>> querySchemeList(Map<String, Object> map) {
@@ -52,30 +55,47 @@ public class SchemeServiceImpl implements SchemeService {
 	return schemeMapper.findSchemeById(toseId);
     }
 
+    @Override
+    public List<HashMap<String, String>> GetSchemeNameSug(String toseName) {
+	return schemeMapper.GetSchemeNameSug(toseName);
+    }
+
+    @Override
+    public List<HashMap<String, String>> GetSchemeCustSug(String custName) {
+	return schemeMapper.GetSchemeCustSug(custName);
+    }
+
     // 新增方案
     // 开启事务
     @Override
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
     public void addScheme(Scheme scheme) {
 	try {
+	    // 新增方案
 	    schemeMapper.addScheme(scheme);
 
 	    ArrayList<SchemeDetail> list = new ArrayList<SchemeDetail>();
 
+	    // 判断明细是否为空
 	    list = scheme.getSchemeDetail();
-
-	    Iterator<SchemeDetail> iter = list.iterator();
-	    while (iter.hasNext()) { // 执行过程中会执行数据锁定，性能稍差，若在循环过程中要去掉某个元素只能调用iter.remove()方法。
-		iter.next().setTosdToseId(scheme.getToseId());
+	    if (list != null && list.size() > 0) {
+		Iterator<SchemeDetail> iter = list.iterator();
+		while (iter.hasNext()) { // 执行过程中会执行数据锁定，性能稍差，若在循环过程中要去掉某个元素只能调用iter.remove()方法。
+		    iter.next().setTosdToseId(scheme.getToseId());
+		}
+		schemeMapper.addSchemeDetail(list);
 	    }
-	    schemeMapper.addSchemeDetail(list);
 
 	} catch (Exception e) {
 	    // 打印错误日志
 	    LogUtil.printLog(e, Exception.class);
 	    // 抛出错误
-	    throw new MyException(ResultEnum.DBException);
+	    throw new MyRuntimeException(ResultEnum.DBException);
 	}
+	// 开启审核流(流程id+ mid+起始用户)
+	String bizId = scheme.getToseId().toString();
+	String addUser = scheme.getAddUser();
+	activitiService.startProcesses("SchemeProcess", bizId, addUser);
     }
 
     // 修改方案
@@ -92,19 +112,20 @@ public class SchemeServiceImpl implements SchemeService {
 	    // 新增
 	    ArrayList<SchemeDetail> list = new ArrayList<SchemeDetail>();
 
+	    // 判断明细是否为空
 	    list = scheme.getSchemeDetail();
-
-	    Iterator<SchemeDetail> iter = list.iterator();
-	    while (iter.hasNext()) { // 执行过程中会执行数据锁定，性能稍差，若在循环过程中要去掉某个元素只能调用iter.remove()方法。
-		iter.next().setTosdToseId(scheme.getToseId());
+	    if (list != null && list.size() > 0) {
+		Iterator<SchemeDetail> iter = list.iterator();
+		while (iter.hasNext()) { // 执行过程中会执行数据锁定，性能稍差，若在循环过程中要去掉某个元素只能调用iter.remove()方法。
+		    iter.next().setTosdToseId(scheme.getToseId());
+		}
+		schemeMapper.addSchemeDetail(list);
 	    }
-	    schemeMapper.addSchemeDetail(list);
-
 	} catch (Exception e) {
 	    // 打印错误日志
 	    LogUtil.printLog(e, Exception.class);
 	    // 抛出错误
-	    throw new MyException(ResultEnum.DBException);
+	    throw new MyRuntimeException(ResultEnum.DBException);
 	}
     }
 
@@ -120,7 +141,7 @@ public class SchemeServiceImpl implements SchemeService {
 	    // 打印错误日志
 	    LogUtil.printLog(e, Exception.class);
 	    // 抛出错误
-	    throw new MyException(ResultEnum.DBException);
+	    throw new MyRuntimeException(ResultEnum.DBException);
 	}
     }
 
@@ -133,6 +154,17 @@ public class SchemeServiceImpl implements SchemeService {
     // 生效方案
     @Override
     public void effectScheme(Integer toseId) {
-	schemeMapper.effectScheme(toseId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> GetSchemeFillMaterial(Map<String, Object> map) {
+	try {
+	    return schemeMapper.GetSchemeFillMaterial(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

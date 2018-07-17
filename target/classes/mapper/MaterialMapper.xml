@@ -5,10 +5,13 @@
 	<resultMap id="BaseResultMap" type="com.skyworth.entity.Material">
 		<id column="tomd_id" property="tomdId" jdbcType="INTEGER" />
 		<result column="tomd_type" property="tomdType" jdbcType="INTEGER" />
+		<result column="tomd_type_name" property="tomdTypeName" jdbcType="VARCHAR" />
 		<result column="tomd_name" property="tomdName" jdbcType="VARCHAR" />
 		<result column="tomd_size" property="tomdSize" jdbcType="INTEGER" />
+		<result column="tomd_size_name" property="tomdSizeName" jdbcType="VARCHAR" />
 		<result column="tomd_poster_url" property="tomdPosterUrl" jdbcType="VARCHAR" />
 		<result column="tomd_click_type" property="tomdClickType" jdbcType="INTEGER" />
+		<result column="tomd_click_type_name" property="tomdClickTypeName" jdbcType="VARCHAR" />
 		<result column="tomd_click" property="tomdClick" jdbcType="VARCHAR" />
 		<result column="tomd_version" property="tomdVersion" jdbcType="VARCHAR" />
 		<result column="tomd_remark" property="tomdRemark" jdbcType="VARCHAR" />
@@ -18,13 +21,18 @@
 	<!-- query material list -->
 	<select id="queryMaterialList" resultMap="BaseResultMap" parameterType="Map">
 		SELECT 
-		tomd_id,tomd_type,tomd_name,tomd_size,tomd_poster_url,tomd_click_type,tomd_click,
-		tomd_version,tomd_remark,isenable
-		FROM tvso_material_data
+		tomd_id,tomd_type,a.code_name as tomd_type_name,tomd_name,
+		tomd_size,b.code_name as tomd_size_name,tomd_poster_url,
+		tomd_click_type,c.code_name as tomd_click_type_name,tomd_click,
+		tomd_version,tomd_remark,m.isenable
+		FROM tvso_material_data m
+		LEFT JOIN tvso_parameter_code a ON a.code_code = m.tomd_type AND a.code_type = 'material_type'
+		LEFT JOIN tvso_parameter_code b ON b.code_code = m.tomd_size AND b.code_type = 'material_size'
+		LEFT JOIN tvso_parameter_code c ON c.code_code = m.tomd_click_type AND c.code_type = 'material_click'
 		WHERE 1=1
 		<if test="tomdType != null and tomdType != ''"> AND tomd_type = #{tomdType}</if>
 		<if test="tomdName != null and tomdName != ''"> AND tomd_name LIKE CONCAT(#{tomdName},'%')</if>
-		ORDER BY tour_id DESC
+		ORDER BY tomd_id DESC
 	</select>
 	
 	<!-- query material by id -->

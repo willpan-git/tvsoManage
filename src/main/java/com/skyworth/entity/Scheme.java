@@ -51,6 +51,10 @@ public class Scheme {
     private Integer toseStatus;
     @ApiModelProperty(value = "有效性")
     private Integer isenable;
+    @ApiModelProperty(value = "新增用户",hidden=true)
+    private String addUser;
+    @ApiModelProperty(value = "修改用户",hidden=true)
+    private String modUser;
     
     private ArrayList<SchemeDetail> schemeDetail;
     
@@ -247,6 +251,35 @@ public class Scheme {
      */
     public void setIsenable(Integer isenable) {
 	this.isenable = isenable;
+    }
+    
+
+    /**
+     * @return the addUser
+     */
+    public String getAddUser() {
+        return addUser;
+    }
+
+    /**
+     * @param addUser the addUser to set
+     */
+    public void setAddUser(String addUser) {
+        this.addUser = addUser;
+    }
+
+    /**
+     * @return the modUser
+     */
+    public String getModUser() {
+        return modUser;
+    }
+
+    /**
+     * @param modUser the modUser to set
+     */
+    public void setModUser(String modUser) {
+        this.modUser = modUser;
     }
 
     /**

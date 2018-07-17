@@ -34,6 +34,8 @@ public class Equip {
     private String toeiEquipmentType;
     @ApiModelProperty(value = "设备使用国家")
     private String toeiEquipmentCountry;
+    @ApiModelProperty(value = "设备使用国家名称")
+    private String toeiEquipmentCountryName;
     @ApiModelProperty(value = "设备默认方案id")
     private Integer toeiDefaultScheme;
     @ApiModelProperty(value = "设备默认方案名称")
@@ -135,6 +137,21 @@ public class Equip {
      */
     public void setToeiEquipmentCountry(String toeiEquipmentCountry) {
 	this.toeiEquipmentCountry = toeiEquipmentCountry;
+    }
+    
+
+    /**
+     * @return the toeiEquipmentCountryName
+     */
+    public String getToeiEquipmentCountryName() {
+        return toeiEquipmentCountryName;
+    }
+
+    /**
+     * @param toeiEquipmentCountryName the toeiEquipmentCountryName to set
+     */
+    public void setToeiEquipmentCountryName(String toeiEquipmentCountryName) {
+        this.toeiEquipmentCountryName = toeiEquipmentCountryName;
     }
 
     /**

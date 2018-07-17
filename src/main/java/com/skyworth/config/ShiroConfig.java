@@ -115,10 +115,11 @@ public class ShiroConfig {
 	securityManager.setRealm(myRealm);
 
 	// 自定义缓存实现 使用redis
-	//securityManager.setCacheManager(cacheManager());
+	securityManager.setCacheManager(cacheManager());
 	
 	// 自定义session管理 使用redis
-	//securityManager.setSessionManager(sessionManager());
+	securityManager.setSessionManager(sessionManager());
+	
 
 	return securityManager;
     }
@@ -156,7 +157,7 @@ public class ShiroConfig {
      * 
      * @return
      */
-    @Bean
+    @Bean(name = "lifecycleBeanPostProcessor")
     public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
 	return new LifecycleBeanPostProcessor();
     }
@@ -220,4 +221,22 @@ public class ShiroConfig {
 	sessionManager.setSessionDAO(redisSessionDAO());
 	return sessionManager;
     }
+
+
+     /*@Bean(name = "redisTemplate")
+     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+ 	RedisTemplate<String, String> template = new RedisTemplate<>();
+ 	RedisSerializer<String> redisSerializer = new StringRedisSerializer();
+ 	template.setConnectionFactory(factory);
+ 	// key序列化方式
+ 	template.setKeySerializer(redisSerializer);
+ 	// value序列化
+ 	template.setValueSerializer(redisSerializer);
+ 	// value hashmap序列化
+ 	template.setHashValueSerializer(redisSerializer);
+ 	// key haspmap序列化
+ 	template.setHashKeySerializer(redisSerializer);
+ 	//
+ 	return template;
+     }*/
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skyworth.mapper.ActivitiMapper">
+	<!-- update process status  -->
+	<update id="updateProcessStatus" parameterType="Map">
+		UPDATE ${tableName}
+		SET ${statusName} = ${status}
+		WHERE ${midName} = ${mid}
+	</update>
+	
+	<!-- get father user -->
+	<select id="getFatherUser" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT IFNULL(tour_parent,'admin')
+		FROM tvso_user
+		WHERE isenable = 1 AND tour_account = #{_parameter}
+		LIMIT 1
+	</select>
+</mapper>

@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.skyworth.entity.Result;
 import com.skyworth.entity.ResultEnum;
-import com.skyworth.exception.MyException;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.service.PublicService;
 import com.skyworth.util.LogUtil;
 import com.skyworth.util.ResultUtil;
@@ -47,8 +47,9 @@ import io.swagger.annotations.ApiParam;
  *        ---------------------------------------------------------* 2018年5月23日
  *        Administrator v1.0.0 修改原因
  */
-@Api(value = "API - PublicController", protocols = "json", tags = "Public")
+@Api(value = "API - PublicController",description = "公共方法API", protocols = "json", tags = "Public")
 @RestController
+@RequestMapping("/tvmanage/public")
 public class PublicController {
     @Autowired
     private PublicService publicService;
@@ -63,7 +64,7 @@ public class PublicController {
 
     // 下拉框数据源
     @ApiOperation(value = "查询下拉框数据", notes = "根据数据类型查询下拉框数据源")
-    @ApiImplicitParam(name = "codeType", value = "参数类型", required = true, dataType = "String")
+    @ApiImplicitParam(name = "codeType", value = "参数类型", required = true, dataType = "String", paramType = "query")
     @RequestMapping(value = { "/queryBaseType" }, method = RequestMethod.GET)
     public List<Map<String, String>> queryBaseType(String codeType) {
 	return publicService.queryBaseType(codeType);
@@ -86,11 +87,11 @@ public class PublicController {
     public Result<Object> uploadFile(@ApiParam(value="上传的文件",required=true) @RequestParam("file") MultipartFile file) {
 	if (file.isEmpty()) {
 	    // 文件为空
-	    throw new MyException(ResultEnum.UnknownFileException);
+	    throw new MyRuntimeException(ResultEnum.UnknownFileException);
 	}
 	if (file.getOriginalFilename() == null || file.getOriginalFilename().length()< 0) {
 	    // 文件名或内容为空
-	    throw new MyException(ResultEnum.ErrorFileException);
+	    throw new MyRuntimeException(ResultEnum.ErrorFileException);
 	}	
 	// 文件保存路径 (静态资源映射到该地址)
 	DateFormat df = new SimpleDateFormat("yyyyMM"); 
@@ -98,7 +99,7 @@ public class PublicController {
 	String filePath = loadpath +"/"+ df.format(calendar.getTime()) +"/";
 	
 	// 获得文件后缀
-	String suf = file.getOriginalFilename().split("\\.")[1];
+	String suf = file.getOriginalFilename().split("\\.")[file.getOriginalFilename().split("\\.").length - 1];
 	// 保存时的文件名(随机数加后缀名)
         String filename = UUID.randomUUID()+"."+suf;
         
@@ -114,7 +115,7 @@ public class PublicController {
 	    // 打印错误日志
 	    LogUtil.printLog(e, Exception.class);
 	    // 抛出错误
-	    throw new MyException(ResultEnum.UploadFailException);
+	    throw new MyRuntimeException(ResultEnum.UploadFailException);
 	}
 	// 上传成功
 	// 打印日志

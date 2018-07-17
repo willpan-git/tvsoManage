@@ -30,6 +30,8 @@ public enum ResultEnum {
     UploadSuccess("0006","上传成功！"),
     NoDataSuccess("0007","没有查询到数据！"),
     AdminSuccess("0008","登入成功！"),
+    UpSuccess("0009","上架成功！"),
+    DownSuccess("0010","下架成功！"),
     /**
      * 未知异常. ErrorCode : 01
      */
@@ -39,6 +41,7 @@ public enum ResultEnum {
      */
     SystemException("02","系统异常"),
     UploadFailException("0201","上传失败！"),
+    InvalidatedSessionException("0202","登入信息已失效，请重新登入!"),
     /**
      * 业务错误. ErrorCode : 03
      */
@@ -57,10 +60,13 @@ public enum ResultEnum {
     UnknowSchemeException("0406","该方案信息不存在！"),
     UnknowMaterialException("0407","该素材信息不存在！"),
     
+    ExistsEquipException("0408","该设备已存在！"),
+    
     /**
      * 数据库操作异常. ErrorCode : 05
      */
     DBException("05","数据库执行异常"),
+    WorkFlowException("0501","流程执行异常"),
     /**
      * 参数验证错误. ErrorCode : 06
      */

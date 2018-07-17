@@ -23,17 +23,17 @@ import com.skyworth.entity.Material;
  *        Administrator v1.0.0 修改原因
  */
 public interface MaterialService {
-    public List<Material> queryMaterialList(Map<String, Object> map);
+    List<Material> queryMaterialList(Map<String, Object> map);
 
-    public Material findMaterialById(Integer tomdId);
+    Material findMaterialById(Integer tomdId);
 
-    public void addMaterial(Material material);
+    void addMaterial(Material material);
 
-    public void updateMaterial(Material material);
+    void updateMaterial(Material material);
 
-    public void deleteMaterial(Integer tomdId);
+    void deleteMaterial(Integer tomdId);
 
-    public void unableMaterial(Integer tomdId);
+    void unableMaterial(Integer tomdId);
 
-    public void effectMaterial(Integer tomdId);
+    void effectMaterial(Integer tomdId);
 }

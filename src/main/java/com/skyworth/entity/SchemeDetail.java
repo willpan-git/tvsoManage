@@ -3,6 +3,8 @@
  */
 package com.skyworth.entity;
 
+import java.util.ArrayList;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -31,11 +33,12 @@ public class SchemeDetail {
     private Integer tosdModelId;
     @ApiModelProperty(value = "方案模板顺序")
     private Integer tosdModelOrder;
+    @ApiModelProperty(value = "方案素材类型")
+    private String tosdRefType;
     @ApiModelProperty(value = "方案素材id")
-    private Integer tosdRefId;
+    private String tosdRefId;
     @ApiModelProperty(value = "方案素材海报存放地址")
-    private String tosdRefUrl;
-    
+    private ArrayList<String> tosdRefUrlList;
     /**
      * @return the tosdId
      */
@@ -85,28 +88,41 @@ public class SchemeDetail {
         this.tosdModelOrder = tosdModelOrder;
     }
     /**
+     * @return the tosdRefType
+     */
+    public String getTosdRefType() {
+        return tosdRefType;
+    }
+    /**
+     * @param tosdRefType the tosdRefType to set
+     */
+    public void setTosdRefType(String tosdRefType) {
+        this.tosdRefType = tosdRefType;
+    }
+    /**
      * @return the tosdRefId
      */
-    public Integer getTosdRefId() {
+    public String getTosdRefId() {
         return tosdRefId;
     }
     /**
      * @param tosdRefId the tosdRefId to set
      */
-    public void setTosdRefId(Integer tosdRefId) {
+    public void setTosdRefId(String tosdRefId) {
         this.tosdRefId = tosdRefId;
     }
     /**
-     * @return the tosdRefUrl
+     * @return the tosdRefUrlList
      */
-    public String getTosdRefUrl() {
-        return tosdRefUrl;
+    public ArrayList<String> getTosdRefUrlList() {
+        return tosdRefUrlList;
     }
     /**
-     * @param tosdRefUrl the tosdRefUrl to set
+     * @param tosdRefUrlList the tosdRefUrlList to set
      */
-    public void setTosdRefUrl(String tosdRefUrl) {
-        this.tosdRefUrl = tosdRefUrl;
+    public void setTosdRefUrlList(ArrayList<String> tosdRefUrlList) {
+        this.tosdRefUrlList = tosdRefUrlList;
     }
-   
+    
+    
 }

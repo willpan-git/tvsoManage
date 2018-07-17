@@ -24,25 +24,25 @@ import com.skyworth.entity.User;
  *        2018��5��7�� Administrator v1.0.0 �޸�ԭ��
  */
 public interface UserService {
-    public AdminUser findUserByAccount(String account);
+    AdminUser findUserByAccount(String account);
 
-    public User findUserById(Integer tourId);
+    User findUserById(Integer tourId);
 
-    public List<User> queryUserList(Map<String, Object> map);
+    List<User> queryUserList(Map<String, Object> map);
 
-    public void addUser(User user);
+    void addUser(User user);
 
-    public void updateUser(User user);
+    void updateUser(User user);
 
-    public void updatePassword(String account, String password);
+    void updatePassword(String account, String password);
 
-    public void unableUser(Integer tourID);
+    void unableUser(Integer tourID);
 
-    public void effectUser(Integer tourID);
+    void effectUser(Integer tourID);
 
-    public void deleteUser(Integer tourId);
+    void deleteUser(Integer tourId);
 
-    public List<Map<String, String>> queryUserByKey(String keyWord);
+    List<Map<String, String>> queryUserByKey(String keyWord);
 
     boolean checkAccount(String account);
 }

@@ -42,36 +42,63 @@ public class EquipServiceImpl implements EquipService {
     public Equip findEquipById(Integer toeiId) {
 	return equipMapper.findEquipById(toeiId);
     }
+
     @Override
     public void addEquip(Equip equip) {
 	equipMapper.addEquip(equip);
     }
+
     @Override
     public void updateEquip(Equip equip) {
 	equipMapper.updateEquip(equip);
     }
+
     @Override
     public void unableEquip(Integer toeiId) {
 	equipMapper.unableEquip(toeiId);
     }
+
     @Override
     public void effectEquip(Integer toeiId) {
 	equipMapper.effectEquip(toeiId);
     }
+
     @Override
     public void deleteEquip(Integer toeiId) {
 	equipMapper.deleteEquip(toeiId);
     }
 
-    public HashMap<String, Object> getDefaultScheme(String Core, String type, String country) {
-	return equipMapper.getDefaultScheme(Core, type, country);
+    @Override
+    public HashMap<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType,
+	    String toeiEquipmentCountry) {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("toeiEquipmentCore", toeiEquipmentCore);
+	map.put("toeiEquipmentType", toeiEquipmentType);
+	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+	return equipMapper.getDefaultScheme(map);
     }
 
-    public HashMap<String, Object> getSchemeList(String Core, String type, String country) {
-	return equipMapper.getSchemeList(Core, type, country);
+    @Override
+    public HashMap<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType,
+	    String toeiEquipmentCountry) {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("toeiEquipmentCore", toeiEquipmentCore);
+	map.put("toeiEquipmentType", toeiEquipmentType);
+	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+	return equipMapper.getSchemeList(map);
     }
 
+    @Override
     public List<Map<String, String>> queryEquipByKey(String keyWord) {
 	return equipMapper.queryEquipByKey(keyWord);
+    }
+
+    @Override
+    public String checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry) {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	map.put("toeiEquipmentCore", toeiEquipmentCore);
+	map.put("toeiEquipmentType", toeiEquipmentType);
+	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+	return equipMapper.checkEquipExists(map);
     }
 }

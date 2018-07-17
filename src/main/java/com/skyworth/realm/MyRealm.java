@@ -3,6 +3,7 @@
  */
 package com.skyworth.realm;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,6 +13,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +76,8 @@ public class MyRealm extends AuthorizingRealm {
 		adminUser.getAdminPassword(), salt, realName);
 
 	// 5.当shiro验证成功，把用户信息放在session里
-//	Session session = SecurityUtils.getSubject().getSession();  
-//	       session.setAttribute("userSession", account);  
-//	       session.setAttribute("userSessionId", adminUser.);  
+	Session session = SecurityUtils.getSubject().getSession(true); 
+	session.setAttribute("activeUser", adminUser.getAdminAccount()); 
 
 	return authenticationInfo;
     }

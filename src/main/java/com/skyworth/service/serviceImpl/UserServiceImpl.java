@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.skyworth.entity.AdminUser;
 import com.skyworth.entity.ResultEnum;
 import com.skyworth.entity.User;
-import com.skyworth.exception.MyException;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.mapper.UserMapper;
 import com.skyworth.service.UserService;
 import com.skyworth.util.LogUtil;
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	    // 打印错误日志
 	    LogUtil.printLog(e, Exception.class);
 	    // 抛出错误
-	    throw new MyException(ResultEnum.DBException);
+	    throw new MyRuntimeException(ResultEnum.DBException);
 	}
     }
 

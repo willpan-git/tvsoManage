@@ -22,7 +22,9 @@ import java.util.Map;
  */
 public interface PublicService {
     // 自动生成编码 WF+年+月+4位编码 例：SC-18050001
-    public String autoCoding(String WF, String table, String nbr);
-
-    public List<Map<String, String>> queryBaseType(String codeType);
+    String autoCoding(String WF, String table, String nbr);
+    // 参数的公共查询方法
+    List<Map<String, String>> queryBaseType(String codeType);
+    // 根据日期字符串获取是当年的第几周
+    Integer getWeekOfYear(String date_str);
 }

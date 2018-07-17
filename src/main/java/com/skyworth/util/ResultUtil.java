@@ -33,6 +33,13 @@ public class ResultUtil {
     public static Result<?> getSuccess() {
 	return getSuccess("", "", null);
     }
+    
+    public static Result<Null> getMsg(String code, String msg) {
+   	Result<Null> result = new Result<Null>();
+   	result.setCode(code);
+   	result.setMsg(msg);
+   	return result;
+       }
 
     public static Result<Null> getError(String code, String msg) {
 	Result<Null> result = new Result<Null>();

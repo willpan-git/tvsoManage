@@ -12,11 +12,10 @@
 
 	<!-- query baseType -->
 	<select id="queryBaseType" resultType="java.util.HashMap" parameterType="java.lang.String">
-		SELECT code_code as
-		codeCode,code_name as codeName
+		SELECT 
+		code_code as codeCode,code_name as codeName
 		FROM tvso_parameter_code
-		WHERE isenable = 1 AND code_type =
-		#{_parameter}
+		WHERE isenable = 1 AND code_type = #{_parameter}
 		ORDER BY code_seq ASC
 	</select>
 </mapper>
