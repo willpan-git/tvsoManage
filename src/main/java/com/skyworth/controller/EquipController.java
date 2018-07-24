@@ -3,11 +3,9 @@
  */
 package com.skyworth.controller;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
  *        ---------------------------------------------------------* 2018年5月18日
  *        Administrator v1.0.0 修改原因
  */
-@Api(value = "API - EquipController",description = "设备管理API", protocols = "json", tags = { "Equipment" })
+@Api(value = "API - EquipController", description = "设备管理API", protocols = "json", tags = { "Equipment" })
 @RestController
 @RequestMapping("/tvmanage/equip")
 public class EquipController {
@@ -56,7 +54,7 @@ public class EquipController {
     @ApiOperation(value = "查询设备列表", notes = "返回信息中包含分页的相关信息，json格式")
     @ApiImplicitParam(name = "map", value = "多种查询条件", required = false, dataType = "Map", paramType = "query")
     @RequestMapping(value = { "/queryEquipList" }, method = RequestMethod.GET)
-    public PageInfo<Equip> queryEquipList(@RequestParam(required = false) Map<String, Object> map) {
+    public Result<?> queryEquipList(@RequestParam(required = false) Map<String, Object> map) {
 	int pageNum = 1;
 	int pageSize = 10;
 	if (map != null && map.get("pageNum") != null) {
@@ -69,20 +67,23 @@ public class EquipController {
 	PageHelper.startPage(pageNum, pageSize);
 	List<Equip> list = equipService.queryEquipList(map);
 	PageInfo<Equip> pageList = new PageInfo<Equip>(list);
-	return pageList;
+
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), pageList);
     }
 
     // 新增设备
     @ApiOperation(value = "新增设备", notes = "根据Equip类新增设备")
     @ApiImplicitParam(name = "equip", value = "设备详细实体equip", required = true, dataType = "Equip")
     @RequestMapping(value = { "/addEquip" }, method = RequestMethod.POST)
-    public Result<Null> addEquip(@RequestBody(required = true) Equip equip) {
+    public Result<?> addEquip(@RequestBody(required = true) Equip equip) {
 	// 新增时判断设备是否存在
 	String toeiEquipmentCore = equip.getToeiEquipmentCore();
 	String toeiEquipmentType = equip.getToeiEquipmentType();
 	String toeiEquipmentCountry = equip.getToeiEquipmentCountry();
-	String equipTemp = equipService.checkEquipExists(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
-	if (equipTemp != null && equipTemp != "") {
+	Integer equipTemp = equipService.checkEquipExists(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
+	if (equipTemp != null && equipTemp != 0) {
 	    throw new MyRuntimeException(ResultEnum.ExistsEquipException);
 	} else {
 	    // 调用新增方法
@@ -91,7 +92,7 @@ public class EquipController {
 	    LogUtil.printLog("新增设备成功!设备名称:" + equip.getToeiEquipmentName() + " 设备编码:" + equip.getToeiEquipmentCode());
 	    // 新增成功提示信息(从枚举类里获取)
 	    ResultEnum resultEnum = ResultEnum.AddSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), "");
 	}
     }
 
@@ -99,7 +100,7 @@ public class EquipController {
     @ApiOperation(value = "修改设备相关信息", notes = "根据设备编码修改设备相关信息")
     @ApiImplicitParam(name = "equip", value = "设备详细实体equip", required = true, dataType = "Equip")
     @RequestMapping(value = { "/updateEquip" }, method = RequestMethod.POST)
-    public Result<Null> updateEquip(@RequestBody(required = true) Equip equip) {
+    public Result<?> updateEquip(@RequestBody(required = true) Equip equip) {
 	// 判断设备是否存在
 	Equip equipTemp = equipService.findEquipById(equip.getToeiId());
 	if (equipTemp == null) {
@@ -111,7 +112,7 @@ public class EquipController {
 	    LogUtil.printLog("修改设备成功!设备名称:" + equip.getToeiEquipmentName() + " 设备编码:" + equip.getToeiEquipmentCode());
 	    // 更新成功提示信息(从枚举类里获取)
 	    ResultEnum resultEnum = ResultEnum.UpdateSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), "");
 	}
     }
 
@@ -119,7 +120,7 @@ public class EquipController {
     @ApiOperation(value = "使设备失效", notes = "根据设备编码失效设备")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/unableEquip" }, method = RequestMethod.POST)
-    public Result<Null> unableEquip(Integer toeiId) {
+    public Result<?> unableEquip(Integer toeiId) {
 	// 判断设备是否存在
 	Equip equip = equipService.findEquipById(toeiId);
 	if (equip == null) {
@@ -132,7 +133,7 @@ public class EquipController {
 	    LogUtil.printLog("失效设备成功!" + " 设备编码:" + equip.getToeiEquipmentCode());
 	    // 返回信息
 	    ResultEnum resultEnum = ResultEnum.UnableSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), "");
 	}
     }
 
@@ -140,7 +141,7 @@ public class EquipController {
     @ApiOperation(value = "使设备生效", notes = "根据设备编码生效设备")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/effectEquip" }, method = RequestMethod.POST)
-    public Result<Null> effectEquip(Integer toeiId) {
+    public Result<?> effectEquip(Integer toeiId) {
 	// 判断设备是否存在
 	Equip equip = equipService.findEquipById(toeiId);
 	if (equip == null) {
@@ -153,7 +154,7 @@ public class EquipController {
 	    LogUtil.printLog("生效设备成功!" + " 设备编码:" + equip.getToeiEquipmentCode());
 	    // 返回信息
 	    ResultEnum resultEnum = ResultEnum.EffectSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), "");
 	}
     }
 
@@ -161,7 +162,7 @@ public class EquipController {
     @ApiOperation(value = "删除设备", notes = "根据设备编码删除设备")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/deleteEquip" }, method = RequestMethod.DELETE)
-    public Result<Null> deleteEquip(Integer toeiId) {
+    public Result<?> deleteEquip(Integer toeiId) {
 	// 判断设备是否存在
 	Equip equip = equipService.findEquipById(toeiId);
 	if (equip == null) {
@@ -173,8 +174,8 @@ public class EquipController {
 	    // 打印到控制台
 	    LogUtil.printLog("删除设备成功!" + " 设备编码:" + equip.getToeiEquipmentCode());
 	    // 返回信息
-	    ResultEnum resultEnum = ResultEnum.EffectSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    ResultEnum resultEnum = ResultEnum.DeleteSuccess;
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), "");
 	}
     }
 
@@ -182,13 +183,15 @@ public class EquipController {
     @ApiOperation(value = "根据设备id查询设备相关信息", notes = "根据设备id查询设备相关信息")
     @ApiImplicitParam(name = "toeiId", value = "设备id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/findEquipById" }, method = RequestMethod.GET)
-    public Equip findEquipById(Integer toeiId) {
+    public Result<?> findEquipById(Integer toeiId) {
 	Equip equip = equipService.findEquipById(toeiId);
 	if (equip == null) {
 	    // 没有查询到数据
 	    throw new MyRuntimeException(ResultEnum.NoDataSuccess);
 	}
-	return equip;
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), equip);
     }
 
     // 根据 机芯+机型+使用国家 自动获取优先级最高的默认设置方案
@@ -198,11 +201,12 @@ public class EquipController {
 	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String", paramType = "query"),
 	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String", paramType = "query") })
     @RequestMapping(value = { "/getDefaultScheme" }, method = RequestMethod.GET)
-    public Map<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType,
-	    String toeiEquipmentCountry) {
-	Map<String, Object> map = new HashMap<String, Object>();
-	map = equipService.getDefaultScheme(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
-	return map;
+    public Result<?> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry) {
+	Map<String, Map<String, Object>> tResultMap = new LinkedHashMap<String, Map<String, Object>>();
+	tResultMap = equipService.getDefaultScheme(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), tResultMap);
     }
 
     // 根据 机芯+机型+使用国家 自动获取设置方案列表
@@ -212,18 +216,29 @@ public class EquipController {
 	    @ApiImplicitParam(name = "toeiEquipmentType", value = "设备机型", required = true, dataType = "String", paramType = "query"),
 	    @ApiImplicitParam(name = "toeiEquipmentCountry", value = "设备使用国家", required = true, dataType = "String", paramType = "query") })
     @RequestMapping(value = { "/getSchemeList" }, method = RequestMethod.GET)
-    public HashMap<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType,
-	    String toeiEquipmentCountry) {
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map = equipService.getSchemeList(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
-	return map;
+    public Result<?> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry) {
+	Map<String, Map<String, Object>> tResultMap = new LinkedHashMap<String, Map<String, Object>>();
+	tResultMap = equipService.getSchemeList(toeiEquipmentCore, toeiEquipmentType, toeiEquipmentCountry);
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), tResultMap);
     }
 
     // 根据关键字查询设备信息
     @ApiOperation(value = "设备名称/编码模糊查询", notes = "根据关键字模糊查询名称/编码")
     @ApiImplicitParam(name = "keyWord", value = "模糊查询关键字", required = false, dataType = "String", paramType = "query")
     @RequestMapping(value = { "/queryEquipByKey" }, method = RequestMethod.GET)
-    public List<Map<String, String>> queryEquipByKey(String keyWord) {
-	return equipService.queryEquipByKey(keyWord);
+    public Result<?> queryEquipByKey(String keyWord) {
+	try {
+	    // 返回信息
+	    ResultEnum resultEnum = ResultEnum.SUCCESS;
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),
+		    equipService.queryEquipByKey(keyWord));
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

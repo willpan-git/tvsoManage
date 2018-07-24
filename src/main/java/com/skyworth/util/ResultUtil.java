@@ -22,24 +22,18 @@ import com.skyworth.entity.Result;
  *        Administrator v1.0.0 修改原因
  */
 public class ResultUtil {
-    public static Result<Object> getSuccess(String code, String msg, Object object) {
+    public static Result<?> getSuccess(String code, String msg, Object object) {
 	Result<Object> result = new Result<Object>();
 	result.setCode(code);
 	result.setMsg(msg);
 	result.setData(object);
 	return result;
     }
+    
 
     public static Result<?> getSuccess() {
 	return getSuccess("", "", null);
     }
-    
-    public static Result<Null> getMsg(String code, String msg) {
-   	Result<Null> result = new Result<Null>();
-   	result.setCode(code);
-   	result.setMsg(msg);
-   	return result;
-       }
 
     public static Result<Null> getError(String code, String msg) {
 	Result<Null> result = new Result<Null>();

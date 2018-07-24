@@ -18,7 +18,7 @@
 		a.code_id,a.code_type,b.code_name as code_type_name,a.code_code,a.code_name,a.code_desc,a.code_seq,a.isenable
 		FROM tvso_parameter_code a
 		INNER JOIN tvso_parameter_code b ON b.code_code = a.code_type AND b.code_type='base_type'
-		WHERE 1=1
+		WHERE 1=1 AND a.adduser != 'system'
 		<if test="codeType != null and codeType != ''"> AND a.code_type = #{codeType}</if>
 		<if test="codeName != null and codeName != ''"> AND a.code_name = #{codeName}</if>
 		ORDER BY a.code_type , a.code_seq ASC
@@ -43,8 +43,7 @@
 	<!-- update parameterCode -->
 	<update id="updateParameterCode" parameterType="com.skyworth.entity.Parameter">
 		UPDATE tvso_parameter_code
-		SET code_name =
-		#{codeName},
+		SET code_name = #{codeName},
 		code_desc = #{codeDesc},
 		code_seq = #{codeSeq}
 		WHERE code_type = #{codeType} AND
@@ -52,25 +51,31 @@
 	</update>
 
 	<!-- delete parameterCode -->
-	<delete id="deleteParameterCode" parameterType="java.util.Map">
+	<delete id="deleteParameterCode" parameterType="java.lang.Integer">
 		DELETE FROM tvso_parameter_code
-		WHERE
-		code_type = #{codeType} AND code_code = #{codeCode}
+		WHERE code_id = #{codeId}
 	</delete>
 	
 	<!-- unable parameterCode -->
-	<update id="unableParameterCode" parameterType="java.util.Map">
+	<update id="unableParameterCode" parameterType="java.lang.Integer">
 		UPDATE tvso_parameter_code
 		SET isenable = 0,
 		modtime = now()
-		WHERE code_type = #{codeType} AND code_code = #{codeCode}
+		WHERE code_id = #{codeId}
 	</update>
 	
 	<!-- effect parameterCode -->
-	<update id="effectParameterCode" parameterType="java.util.Map">
+	<update id="effectParameterCode" parameterType="java.lang.Integer">
 		UPDATE tvso_parameter_code
 		SET isenable = 1,
 		modtime = now()
-		WHERE code_type = #{codeType} AND code_code = #{codeCode}
+		WHERE code_id = #{codeId}
 	</update>
+	
+	<!-- check parameter exists -->
+	<select id="checkParameterExists" resultType="int" parameterType="java.util.Map">
+		SELECT code_id FROM tvso_parameter_code
+		WHERE code_type = #{codeType}
+		AND code_code = #{codeCode}
+	</select>
 </mapper>

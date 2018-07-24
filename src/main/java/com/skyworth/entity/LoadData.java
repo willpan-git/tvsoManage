@@ -5,6 +5,9 @@ package com.skyworth.entity;
 
 import java.util.ArrayList;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**   
 * Copyright: Copyright (c) 2018 skyworth
 * 
@@ -20,8 +23,11 @@ import java.util.ArrayList;
 *---------------------------------------------------------*
 * 2018年7月4日     Administrator           v1.0.0               修改原因
 */
+@ApiModel(description = "应用下载信息类")
 public class LoadData {
+    @ApiModelProperty(value = "应用id")
     private int id;
+    @ApiModelProperty(value = "应用名称")
     private String name;
     private ArrayList<tData> data;
     
@@ -79,10 +85,15 @@ public class LoadData {
 
     /* 非静态的内部类默认的构造函数有一个参数，这个参数指向其外部类的实例,
      * 对于内部类，如果没必要访问外部类，我们可以将其定义为static的*/
+    @ApiModel(description = "应用下载信息详情")
     static class tData{
+	@ApiModelProperty(value = "年")
 	private int tYear;
+	@ApiModelProperty(value = "月")
 	private int tMonth;
+	@ApiModelProperty(value = "周")
 	private int tWeek;
+	@ApiModelProperty(value = "周下载量")
 	private int tNum;
 	/**
 	 * @return the tYear

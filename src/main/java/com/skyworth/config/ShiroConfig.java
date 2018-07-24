@@ -87,6 +87,7 @@ public class ShiroConfig {
 	filterChainDefinitionMap.put("/webjars/**", "anon");
 	filterChainDefinitionMap.put("/swagger-resources/**", "anon");
 	filterChainDefinitionMap.put("/v2/**", "anon");
+	filterChainDefinitionMap.put("/docs/**", "anon");
 	// druid 监控放行
 	filterChainDefinitionMap.put("/druid/**", "anon");
 	// 退出 过滤器

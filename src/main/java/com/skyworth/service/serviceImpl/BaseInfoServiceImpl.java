@@ -3,6 +3,7 @@
  */
 package com.skyworth.service.serviceImpl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skyworth.entity.Parameter;
+import com.skyworth.entity.ResultEnum;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.mapper.BaseInfoMapper;
 import com.skyworth.service.BaseInfoService;
+import com.skyworth.util.LogUtil;
 
 /**
  * Copyright: Copyright (c) 2018 skyworth
@@ -41,7 +45,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void addParameterCode(Parameter parameter) {
-	baseInfoMapper.addParameterCode(parameter);
+	try {
+	    baseInfoMapper.addParameterCode(parameter);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -53,7 +64,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void updateParameterCode(Parameter parameter) {
-	baseInfoMapper.updateParameterCode(parameter);
+	try {
+	    baseInfoMapper.updateParameterCode(parameter);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -64,7 +82,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void unableParameterCode(Integer codeId) {
-	baseInfoMapper.unableParameterCode(codeId);
+	try {
+	    baseInfoMapper.unableParameterCode(codeId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -75,7 +100,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void effectParameterCode(Integer codeId) {
-	baseInfoMapper.effectParameterCode(codeId);
+	try {
+	    baseInfoMapper.effectParameterCode(codeId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -86,7 +118,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public void deleteParameterCode(Integer codeId) {
-	baseInfoMapper.deleteParameterCode(codeId);
+	try {
+	    baseInfoMapper.deleteParameterCode(codeId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -97,7 +136,14 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public Parameter findParameterById(Integer codeId) {
-	return baseInfoMapper.findParameterById(codeId);
+	try {
+	    return baseInfoMapper.findParameterById(codeId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /*
@@ -107,7 +153,28 @@ public class BaseInfoServiceImpl implements BaseInfoService {
      */
     @Override
     public List<Parameter> queryParameterList(Map<String, Object> map) {
-	return baseInfoMapper.queryParameterList(map);
+	try {
+	    return baseInfoMapper.queryParameterList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
+    @Override
+    public Integer checkParameterExists(String codeType, String codeCode) {
+	try {
+	    HashMap<String, Object> map = new HashMap<String, Object>();
+	    map.put("codeType", codeType);
+	    map.put("codeCode",codeCode);
+	    return baseInfoMapper.checkParameterExists(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
+    }
 }

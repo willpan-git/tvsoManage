@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skyworth.mapper.AdMapper">
+	<resultMap id="BaseResultMap" type="com.skyworth.entity.Advertisement">
+		<id column="toat_id" property="toatId" jdbcType="INTEGER" />
+		<result column="toat_name" property="toatName" jdbcType="VARCHAR" />
+		<result column="toat_url" property="toatUrl" jdbcType="VARCHAR" />
+		<result column="toat_duration" property="toatDuration" jdbcType="TIME" />
+		<result column="toat_format" property="toatFormat" jdbcType="VARCHAR" />
+		<result column="toat_remark" property="toatRemark" jdbcType="VARCHAR" />
+		<result column="isenable" property="isenable" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- query advertisement list-->
+	<select id="queryAdvertisementList" resultType="com.skyworth.entity.Advertisement"
+		parameterType="Map">
+		SELECT toat_id ,toat_name, toat_url , toat_duration, toat_format, toat_remark,isenable
+		FROM tvso_advertisement
+		WHERE 1=1
+		<if test="toatName != null and toatName != ''"> AND toat_name LIKE CONCAT(TRIM(#{toatName}),'%')</if>
+		ORDER BY toat_id DESC
+	</select>
+	
+	<!-- query advertisement by id -->
+	<select id="queryAdvertisementById" resultType="com.skyworth.entity.Advertisement"
+		parameterType="java.lang.Integer">
+		SELECT toat_id ,toat_name, toat_url , toat_duration, toat_format, toat_remark,isenable
+		FROM tvso_advertisement
+		WHERE toat_id = #{toatId}
+	</select>
+	
+	<!-- add  advertisement-->
+	<insert id="addAdvertisement" parameterType="com.skyworth.entity.Advertisement">
+		INSERT INTO tvso_advertisement
+		(toat_name, toat_url , toat_duration, toat_format, toat_remark,isenable)
+		VALUES
+		(#{toatName},#{toatUrl},#{toatDuration},#{toatFormat},#{toatRemark},#{isenable})
+	</insert>
+	
+	<!-- update  advertisement-->
+	<update id="updateAdvertisement" parameterType="com.skyworth.entity.Advertisement">
+		UPDATE tvso_advertisement
+		SET toat_name = #{toatName},
+			toat_url = #{toatUrl},
+			toat_duration = #{toatDuration},
+			toat_format = #{toatFormat},
+			toat_remark = #{toatRemark},
+			isenable = #{isenable}
+		WHERE toat_id = #{toatId}
+	</update>
+	
+	<!-- delete  advertisement-->
+	<delete id="deleteAdvertisement" parameterType="java.lang.Integer">
+		DELETE FROM tvso_advertisement
+		WHERE toat_id = #{toatId}
+	</delete>
+		
+</mapper>

@@ -10,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skyworth.entity.Material;
+import com.skyworth.entity.ResultEnum;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.mapper.MaterialMapper;
 import com.skyworth.service.MaterialService;
+import com.skyworth.util.LogUtil;
 
 /**
  * Copyright: Copyright (c) 2018 skyworth
@@ -34,36 +37,85 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public List<Material> queryMaterialList(Map<String, Object> map) {
-	return materialMapper.queryMaterialList(map);
+	try {
+	    return materialMapper.queryMaterialList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public Material findMaterialById(Integer tomdId) {
-	return materialMapper.findMaterialById(tomdId);
+	try {
+	    return materialMapper.findMaterialById(tomdId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void addMaterial(Material material) {
-	materialMapper.addMaterial(material);
+	try {
+	    materialMapper.addMaterial(material);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void updateMaterial(Material material) {
-	materialMapper.updateMaterial(material);
+	try {
+	    materialMapper.updateMaterial(material);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void deleteMaterial(Integer tomdId) {
-	materialMapper.deleteMaterial(tomdId);
+	try {
+	    materialMapper.deleteMaterial(tomdId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void unableMaterial(Integer tomdId) {
-	materialMapper.unableMaterial(tomdId);
+	try {
+	    materialMapper.unableMaterial(tomdId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void effectMaterial(Integer tomdId) {
-	materialMapper.effectMaterial(tomdId);
+	try {
+	    materialMapper.effectMaterial(tomdId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

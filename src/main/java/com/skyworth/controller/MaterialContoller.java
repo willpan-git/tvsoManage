@@ -6,8 +6,6 @@ package com.skyworth.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.validation.constraints.Null;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +52,7 @@ public class MaterialContoller {
     @ApiOperation(value = "查询素材列表", notes = "返回信息中包含分页的相关信息，json格式")
     @ApiImplicitParam(name = "map", value = "多种查询条件", required = false, dataType = "Map", paramType = "query")
     @RequestMapping(value = { "/queryMaterialList" }, method = RequestMethod.GET)
-    public PageInfo<Material> queryMaterialList(@RequestParam(required = false) Map<String, Object> map) {
+    public Result<?> queryMaterialList(@RequestParam(required = false) Map<String, Object> map) {
 	int pageNum = 1;
 	int pageSize = 10;
 	if (map != null && map.get("pageNum") != null) {
@@ -67,55 +65,61 @@ public class MaterialContoller {
 	PageHelper.startPage(pageNum, pageSize);
 	List<Material> list = materialService.queryMaterialList(map);
 	PageInfo<Material> pageList = new PageInfo<Material>(list);
-	return pageList;
+	
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(), pageList);
     }
     
     // 根据素材id查询素材相关信息
     @ApiOperation(value = "根据素材id查询素材相关信息", notes = "根据素材id查询素材相关信息")
     @ApiImplicitParam(name = "tomdId", value = "素材id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/findMaterialById" }, method = RequestMethod.GET)
-    public Material findMaterialById(Integer tomdId) {
+    public Result<?> findMaterialById(Integer tomdId) {
 	Material material = materialService.findMaterialById(tomdId);
 	if (material == null) {
 	    // 没有查询到数据
 	    throw new MyRuntimeException(ResultEnum.NoDataSuccess);
 	}
-	return material;
+	// 返回信息
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),material);
+	
     }
 
     // 新增接口
     @ApiOperation(value = "新增素材", notes = "新增素材")
     @ApiImplicitParam(name = "material", value = "素材详细实体类material", required = true, dataType = "Material")
     @RequestMapping(value = { "/addMaterial" }, method = RequestMethod.POST)
-    public Result<Null> addMaterial(@RequestBody(required = true) Material material) {
+    public Result<?> addMaterial(@RequestBody(required = true) Material material) {
 	// 调用方法
 	materialService.addMaterial(material);
 	// 新增成功后打印日志信息
 	LogUtil.printLog("新增素材成功!名称:" + material.getTomdName());
 	// 新增成功提示信息(从枚举类里获取)
 	ResultEnum resultEnum = ResultEnum.AddSuccess;
-	return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
     }
 
     // 修改接口
     @ApiOperation(value = "修改素材相关信息", notes = "修改素材相关信息")
     @ApiImplicitParam(name = "material", value = "素材详细实体类material", required = true, dataType = "Material")
     @RequestMapping(value = { "/updateMaterial" }, method = RequestMethod.POST)
-    public Result<Null> updateMaterial(@RequestBody(required = true) Material material) {
+    public Result<?> updateMaterial(@RequestBody(required = true) Material material) {
 	// 调用更新方法
 	materialService.updateMaterial(material);
 	// 更新成功后打印日志信息
 	LogUtil.printLog("修改素材成功!名称:" + material.getTomdName());
 	// 更新成功提示信息(从枚举类里获取)
 	ResultEnum resultEnum = ResultEnum.UpdateSuccess;
-	return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
     }
 
     // 失效接口
     @ApiOperation(value = "失效素材", notes = "失效素材")
     @ApiImplicitParam(name = "tomdId", value = "素材id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/unableMaterial" }, method = RequestMethod.POST)
-    public Result<Null> unableMaterial(Integer tomdId) {
+    public Result<?> unableMaterial(Integer tomdId) {
 	// 判断设备是否存在
 	Material material = materialService.findMaterialById(tomdId);
 	if (material == null) {
@@ -128,7 +132,7 @@ public class MaterialContoller {
 	    LogUtil.printLog("失效素材成功!" + " 名称:" + material.getTomdName());
 	    // 返回信息
 	    ResultEnum resultEnum = ResultEnum.UnableSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
 	}
     }
     
@@ -136,7 +140,7 @@ public class MaterialContoller {
     @ApiOperation(value = "生效素材", notes = "生效素材")
     @ApiImplicitParam(name = "tomdId", value = "素材id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/effectMaterial" }, method = RequestMethod.POST)
-    public Result<Null> effectMaterial(Integer tomdId) {
+    public Result<?> effectMaterial(Integer tomdId) {
 	// 判断素材是否存在
 	Material material = materialService.findMaterialById(tomdId);
 	if (material == null) {
@@ -148,7 +152,7 @@ public class MaterialContoller {
 	    LogUtil.printLog("生效素材成功!" + " 名称:" + material.getTomdName());
 	    // 返回信息
 	    ResultEnum resultEnum = ResultEnum.EffectSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
 	}
     }
     
@@ -156,7 +160,7 @@ public class MaterialContoller {
     @ApiOperation(value = "删除素材", notes = "删除素材")
     @ApiImplicitParam(name = "tomdId", value = "素材id", required = true, dataType = "Integer", paramType = "query")
     @RequestMapping(value = { "/deleteMaterial" }, method = RequestMethod.DELETE)
-    public Result<Null> deleteMaterial(Integer tomdId) {
+    public Result<?> deleteMaterial(Integer tomdId) {
 	// 判断设备是否存在
 	Material material = materialService.findMaterialById(tomdId);
 	if (material == null) {
@@ -168,7 +172,7 @@ public class MaterialContoller {
 	    LogUtil.printLog("删除素材成功!" + " 名称:" + material.getTomdName());
 	    // 返回信息
 	    ResultEnum resultEnum = ResultEnum.DeleteSuccess;
-	    return ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
 	}
     }
 }

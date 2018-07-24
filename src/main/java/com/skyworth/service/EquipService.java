@@ -3,7 +3,6 @@
  */
 package com.skyworth.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,11 +37,11 @@ public interface EquipService {
 
     void deleteEquip(Integer toeiId);
 
-    HashMap<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
+    Map<String, Map<String, Object>> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
 
-    HashMap<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
+    Map<String, Map<String, Object>> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
 
     List<Map<String, String>> queryEquipByKey(String keyWord);
 
-    String checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
+    Integer checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry);
 }

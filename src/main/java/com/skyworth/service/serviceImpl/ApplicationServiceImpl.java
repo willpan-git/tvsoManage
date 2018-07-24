@@ -42,37 +42,86 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public List<HashMap<String, Object>> queryApplicationList(Map<String, Object> map) {
-	return applicationMapper.queryApplicationList(map);
+	try {
+	    return applicationMapper.queryApplicationList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public Application queryApplicationById(Integer toanId) {
-	return applicationMapper.queryApplicationById(toanId);
+	try {
+	    return applicationMapper.queryApplicationById(toanId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void addApplication(Application application) {
-	applicationMapper.addApplication(application);
+	try {
+	    applicationMapper.addApplication(application);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void updateApplication(Application application) {
-	applicationMapper.updateApplication(application);
+	try {
+	    applicationMapper.updateApplication(application);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void deleteApplication(Integer toanId) {
-	applicationMapper.deleteApplication(toanId);
+	try {
+	    applicationMapper.deleteApplication(toanId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void unableApplication(Integer toanId) {
-	applicationMapper.unableApplication(toanId);
+	try {
+	    applicationMapper.unableApplication(toanId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void effectApplication(Integer toanId) {
-	applicationMapper.effectApplication(toanId);
+	try {
+	    applicationMapper.effectApplication(toanId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     // app每下载一次，更新下载量，
@@ -97,19 +146,40 @@ public class ApplicationServiceImpl implements ApplicationService {
 	    throw new MyRuntimeException(ResultEnum.DBException);
 	}
     }
-    
+
     @Override
     public List<HashMap<String, Object>> queryAppTypePercentList() {
-	return applicationMapper.queryAppTypePercentList();
+	try {
+	    return applicationMapper.queryAppTypePercentList();
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
-    
+
     @Override
-    public List<LoadData> queryAppLoadDetailsByMonth(String idx){
-	return applicationMapper.queryAppLoadDetailsByMonth(idx);
+    public List<LoadData> queryAppLoadDetailsByMonth(String idx) {
+	try {
+	    return applicationMapper.queryAppLoadDetailsByMonth(idx);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
-    
+
     @Override
-    public List<LoadData> queryAppLoadDetailsByWeek(String idx){
-	return applicationMapper.queryAppLoadDetailsByWeek(idx);
+    public List<LoadData> queryAppLoadDetailsByWeek(String idx) {
+	try {
+	    return applicationMapper.queryAppLoadDetailsByWeek(idx);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

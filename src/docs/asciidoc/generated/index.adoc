@@ -1,0 +1,3421 @@
+= TV平台后台管理系统接口详情
+
+
+[[_overview]]
+== Overview
+Spring Boot中使用Swagger2构建RESTful APIs
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : 1.0
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : skyworth
+
+
+=== License information
+[%hardbreaks]
+__Terms of service__ : http://www.skyworth.com
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : localhost:8082
+__BasePath__ : /
+
+
+=== Tags
+
+* APP : 应用管理API
+* Activiti : 流程管理API
+* Admin : 用户登入API
+* BaseInfo : 基础数据管理API
+* Equipment : 设备管理API
+* Material : 素材管理API
+* Public : 公共方法API
+* Scheme : 方案管理API
+* User : 用户管理API
+
+
+
+
+[[_paths]]
+== Paths
+
+[[_workflowreviewusingpost]]
+=== 审核操作 通过/退回 接口
+....
+POST /tvmanage/activiti/workflowReview
+....
+
+
+==== Description
+审核操作 通过/退回 接口
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**mid** +
+__required__|单据主id|string
+|**Query**|**result** +
+__required__|操作结构,通过为true,退回为false|boolean
+|**Query**|**wfId** +
+__required__|流程key,例：SchemeProcess|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Activiti
+
+
+[[_addapplicationusingpost]]
+=== 新增应用
+....
+POST /tvmanage/app/addApplication
+....
+
+
+==== Description
+新增应用信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**application** +
+__required__|应用实体类|<<_application,Application>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_deleteapplicationusingdelete]]
+=== 删除应用
+....
+DELETE /tvmanage/app/deleteApplication
+....
+
+
+==== Description
+删除应用
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_effectapplicationusingpost]]
+=== 上架应用
+....
+POST /tvmanage/app/effectApplication
+....
+
+
+==== Description
+上架应用
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_queryapploaddetailsbymonthusingget]]
+=== 查询app每月点击量
+....
+GET /tvmanage/app/queryAppLoadDetailsByMonth
+....
+
+
+==== Description
+查询往前的6个月
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**idx** +
+__required__|应用id集合,例 10,11,12|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_loaddata,LoadData>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_queryapploaddetailsbyweekusingget]]
+=== 查询app每周点击量
+....
+GET /tvmanage/app/queryAppLoadDetailsByWeek
+....
+
+
+==== Description
+查询往前的6个星期
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**idx** +
+__required__|应用id集合,例 10,11,12|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_loaddata,LoadData>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_queryapptypepercentlistusingget]]
+=== 查询app类型百分比
+....
+GET /tvmanage/app/queryAppTypePercentList
+....
+
+
+==== Description
+保留2位小数
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_25ace99c7bfccf8d17a8f035a9b4bd2f,HashMap«string,object»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_queryapplicationbyidusingget]]
+=== 根据id查询应用信息
+....
+GET /tvmanage/app/queryApplicationById
+....
+
+
+==== Description
+根据id查询应用信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_application,Application>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_queryapplicationlistusingget]]
+=== 查询应用列表
+....
+GET /tvmanage/app/queryApplicationList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|查询条件：应用类型，应用名称|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_unableapplicationusingpost]]
+=== 下架应用
+....
+POST /tvmanage/app/unableApplication
+....
+
+
+==== Description
+下架应用
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_updateapplicationusingpost]]
+=== 修改应用
+....
+POST /tvmanage/app/updateApplication
+....
+
+
+==== Description
+修改应用信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**application** +
+__required__|应用实体类|<<_application,Application>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_updateapplicationloadusingpost]]
+=== 应用每下载一次更新下载数量
+....
+POST /tvmanage/app/updateApplicationLoad
+....
+
+
+==== Description
+应用每下载一次更新下载数量
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**dateStr** +
+__required__|当前日期，例：2018-06-14|string
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|No Content
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* APP
+
+
+[[_addparametercodeusingpost]]
+=== 新增基础数据
+....
+POST /tvmanage/baseinfo/addParameterCode
+....
+
+
+==== Description
+新增基础数据
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**parameter** +
+__required__|参数类|<<_parameter,Parameter>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_deleteparametercodeusingdelete]]
+=== 删除单笔基础数据
+....
+DELETE /tvmanage/baseinfo/deleteParameterCode
+....
+
+
+==== Description
+删除单笔基础数据
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**codeId** +
+__required__|参数id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_effectparametercodeusingpost]]
+=== 生效单笔基础数据
+....
+POST /tvmanage/baseinfo/effectParameterCode
+....
+
+
+==== Description
+生效单笔基础数据
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**codeId** +
+__required__|参数id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_fingparameterbyidusingget]]
+=== 根据参数id查询参数信息
+....
+GET /tvmanage/baseinfo/fingParameterById
+....
+
+
+==== Description
+根据参数id查询参数信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**codeId** +
+__required__|参数id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_parameter,Parameter>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_queryparameterlistusingget]]
+=== 查询参数列表
+....
+GET /tvmanage/baseinfo/queryParameterList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_53c0ccd620174de7b1fa3788b1cb61e8,PageInfo«Parameter»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_unableparametercodeusingpost]]
+=== 失效单笔基础数据
+....
+POST /tvmanage/baseinfo/unableParameterCode
+....
+
+
+==== Description
+失效单笔基础数据
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**codeId** +
+__required__|参数id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_updateparametercodeusingpost]]
+=== 修改基础数据
+....
+POST /tvmanage/baseinfo/updateParameterCode
+....
+
+
+==== Description
+修改基础数据
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**parameter** +
+__required__|参数类|<<_parameter,Parameter>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* BaseInfo
+
+
+[[_addequipusingpost]]
+=== 新增设备
+....
+POST /tvmanage/equip/addEquip
+....
+
+
+==== Description
+根据Equip类新增设备
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**equip** +
+__required__|设备详细实体equip|<<_equip,Equip>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_deleteequipusingdelete]]
+=== 删除设备
+....
+DELETE /tvmanage/equip/deleteEquip
+....
+
+
+==== Description
+根据设备编码删除设备
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiId** +
+__required__|设备id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_effectequipusingpost]]
+=== 使设备生效
+....
+POST /tvmanage/equip/effectEquip
+....
+
+
+==== Description
+根据设备编码生效设备
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiId** +
+__required__|设备id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_findequipbyidusingget]]
+=== 根据设备id查询设备相关信息
+....
+GET /tvmanage/equip/findEquipById
+....
+
+
+==== Description
+根据设备id查询设备相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiId** +
+__required__|设备id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_equip,Equip>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_getdefaultschemeusingget]]
+=== 获取默认设置方案
+....
+GET /tvmanage/equip/getDefaultScheme
+....
+
+
+==== Description
+根据 机芯+机型+使用国家 自动获取优先级最高的默认设置方案
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiEquipmentCore** +
+__required__|设备机芯|string
+|**Query**|**toeiEquipmentCountry** +
+__required__|设备使用国家|string
+|**Query**|**toeiEquipmentType** +
+__required__|设备机型|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< string, < string, object > map > map
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_getschemelistusingget]]
+=== 获取设置方案列表
+....
+GET /tvmanage/equip/getSchemeList
+....
+
+
+==== Description
+根据 机芯+机型+使用国家 自动获取有效的设置方案列表
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiEquipmentCore** +
+__required__|设备机芯|string
+|**Query**|**toeiEquipmentCountry** +
+__required__|设备使用国家|string
+|**Query**|**toeiEquipmentType** +
+__required__|设备机型|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< string, < string, object > map > map
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_queryequipbykeyusingget]]
+=== 设备名称/编码模糊查询
+....
+GET /tvmanage/equip/queryEquipByKey
+....
+
+
+==== Description
+根据关键字模糊查询名称/编码
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**keyWord** +
+__optional__|模糊查询关键字|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_queryequiplistusingget]]
+=== 查询设备列表
+....
+GET /tvmanage/equip/queryEquipList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_415dd10353a8f1a5a57e81eed0cd4958,PageInfo«Equip»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_unableequipusingpost]]
+=== 使设备失效
+....
+POST /tvmanage/equip/unableEquip
+....
+
+
+==== Description
+根据设备编码失效设备
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toeiId** +
+__required__|设备id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_updateequipusingpost]]
+=== 修改设备相关信息
+....
+POST /tvmanage/equip/updateEquip
+....
+
+
+==== Description
+根据设备编码修改设备相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**equip** +
+__required__|设备详细实体equip|<<_equip,Equip>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Equipment
+
+
+[[_addmaterialusingpost]]
+=== 新增素材
+....
+POST /tvmanage/material/addMaterial
+....
+
+
+==== Description
+新增素材
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**material** +
+__required__|素材详细实体类material|<<_material,Material>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_deletematerialusingdelete]]
+=== 删除素材
+....
+DELETE /tvmanage/material/deleteMaterial
+....
+
+
+==== Description
+删除素材
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tomdId** +
+__required__|素材id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_effectmaterialusingpost]]
+=== 生效素材
+....
+POST /tvmanage/material/effectMaterial
+....
+
+
+==== Description
+生效素材
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tomdId** +
+__required__|素材id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_findmaterialbyidusingget]]
+=== 根据素材id查询素材相关信息
+....
+GET /tvmanage/material/findMaterialById
+....
+
+
+==== Description
+根据素材id查询素材相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tomdId** +
+__required__|素材id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_material,Material>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_querymateriallistusingget]]
+=== 查询素材列表
+....
+GET /tvmanage/material/queryMaterialList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_acf6f900140e32b4130755a0e39a9ce4,PageInfo«Material»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_unablematerialusingpost]]
+=== 失效素材
+....
+POST /tvmanage/material/unableMaterial
+....
+
+
+==== Description
+失效素材
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tomdId** +
+__required__|素材id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_updatematerialusingpost]]
+=== 修改素材相关信息
+....
+POST /tvmanage/material/updateMaterial
+....
+
+
+==== Description
+修改素材相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**material** +
+__required__|素材详细实体类material|<<_material,Material>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Material
+
+
+[[_querybasetypeusingget]]
+=== 查询下拉框数据
+....
+GET /tvmanage/public/queryBaseType
+....
+
+
+==== Description
+根据数据类型查询下拉框数据源
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**codeType** +
+__required__|参数类型|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Public
+
+
+[[_uploadfileusingpost]]
+=== 上传附件功能
+....
+POST /tvmanage/public/uploadFile
+....
+
+
+==== Description
+上传附件功能,返回文件存放路劲url
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**FormData**|**file** +
+__required__|上传的文件|file
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `multipart/form-data`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Public
+
+
+[[_getschemecustsugusingget]]
+=== 方案客户检索框
+....
+GET /tvmanage/scheme/GetSchemeCustSug
+....
+
+
+==== Description
+方案客户检索框接口
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**custName** +
+__optional__|客户名称|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_0ab57a1dc6a504a53a0e4fe7401475d9,HashMap«string,string»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_getschemefillmaterialusingget]]
+=== 查询填充素材列表
+....
+GET /tvmanage/scheme/GetSchemeFillMaterial
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|查询条件：materialType 类型；materialName 名称；pageNum 第几页；pageSize 每页大小|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_getschemenamesugusingget]]
+=== 方案名称检索框
+....
+GET /tvmanage/scheme/GetSchemeNameSug
+....
+
+
+==== Description
+方案名称检索框接口
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toseName** +
+__optional__|方案名称|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_0ab57a1dc6a504a53a0e4fe7401475d9,HashMap«string,string»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_addschemeusingpost]]
+=== 新增方案
+....
+POST /tvmanage/scheme/addScheme
+....
+
+
+==== Description
+新增方案信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**scheme** +
+__required__|方案实体类|<<_scheme,Scheme>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_deleteschemeusingdelete]]
+=== 删除方案
+....
+DELETE /tvmanage/scheme/deleteScheme
+....
+
+
+==== Description
+删除方案
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toseId** +
+__required__|方案id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_effectschemeusingpost]]
+=== 生效方案
+....
+POST /tvmanage/scheme/effectScheme
+....
+
+
+==== Description
+生效方案
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toseId** +
+__required__|方案id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_findschemebyidusingget]]
+=== 根据id查询方案信息
+....
+GET /tvmanage/scheme/findSchemeById
+....
+
+
+==== Description
+根据id查询方案信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toseId** +
+__required__|方案id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_scheme,Scheme>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_queryschemelistusingget]]
+=== 查询方案列表
+....
+GET /tvmanage/scheme/querySchemeList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_saveschemeusingpost]]
+=== 保存方案
+....
+POST /tvmanage/scheme/saveScheme
+....
+
+
+==== Description
+保存方案信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**scheme** +
+__required__|方案实体类|<<_scheme,Scheme>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_unableschemeusingpost]]
+=== 失效方案
+....
+POST /tvmanage/scheme/unableScheme
+....
+
+
+==== Description
+失效方案
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toseId** +
+__required__|方案id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_updateschemeusingpost]]
+=== 修改方案
+....
+POST /tvmanage/scheme/updateScheme
+....
+
+
+==== Description
+修改方案信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**scheme** +
+__required__|方案实体类|<<_scheme,Scheme>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Scheme
+
+
+[[_adduserusingpost]]
+=== 创建用户
+....
+POST /tvmanage/user/addUser
+....
+
+
+==== Description
+根据User对象创建用户
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**user** +
+__required__|用户详细实体user|<<_user,User>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_checkaccountusingget]]
+=== 判断用户账号是否存在
+....
+GET /tvmanage/user/checkAccount
+....
+
+
+==== Description
+根据关键字判断用户账号是否存在
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**account** +
+__required__|检索关键字|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|boolean
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_deleteuserusingdelete]]
+=== 删除用户
+....
+DELETE /tvmanage/user/deleteUser
+....
+
+
+==== Description
+根据用户账号删除用户
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tourId** +
+__required__|用户id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_effectuserusingpost]]
+=== 使用户生效
+....
+POST /tvmanage/user/effectUser
+....
+
+
+==== Description
+根据用户账号生效用户
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tourId** +
+__required__|用户id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_finduserbyidusingget]]
+=== 根据用户id查询用户相关信息
+....
+GET /tvmanage/user/findUserById
+....
+
+
+==== Description
+根据用户id查询用户相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tourId** +
+__required__|用户id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_user,User>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_loginusingpost]]
+=== 用户登入接口
+....
+POST /tvmanage/user/login
+....
+
+
+==== Description
+输入用户账号、密码登入
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**account** +
+__required__|用户账号|string
+|**Query**|**password** +
+__required__|用户密码|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**257**|该用户名不存在！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**258**|用户名或密码错误！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**259**|用户名已被锁定或失效，请联系管理员！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Admin
+
+
+[[_queryuserbykeyusingget]]
+=== 用户模糊查询接口
+....
+GET /tvmanage/user/queryUserByKey
+....
+
+
+==== Description
+根据关键字查询用户名称账号
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**keyWord** +
+__optional__|检索关键字|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_queryuserlistusingget]]
+=== 查询用户列表
+....
+GET /tvmanage/user/queryUserList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_4994708ea1e995db67c5e36e9a5fb662,PageInfo«User»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_unableuserusingpost]]
+=== 使用户失效
+....
+POST /tvmanage/user/unableUser
+....
+
+
+==== Description
+根据用户账号失效用户
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**tourId** +
+__required__|用户id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_updatepasswordusingpost]]
+=== 修改用户密码
+....
+POST /tvmanage/user/updatePassword
+....
+
+
+==== Description
+根据用户账号修改用户密码
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**oldpassword** +
+__required__|旧密码|string
+|**Query**|**tourAccount** +
+__required__|用户账号|string
+|**Query**|**tourName** +
+__required__|用户名称|string
+|**Query**|**tourPassword** +
+__required__|新密码|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+[[_updateuserusingpost]]
+=== 修改用户相关信息
+....
+POST /tvmanage/user/updateUser
+....
+
+
+==== Description
+根据用户账号修改用户相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**user** +
+__required__|用户详细实体user|<<_user,User>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* User
+
+
+
+
+[[_definitions]]
+== Definitions
+
+[[_application]]
+=== Application
+app应用类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**applicationLoad** +
+__optional__||< <<_applicationload,ApplicationLoad>> > array
+|**isenable** +
+__optional__|上/下架标识|integer (int32)
+|**toanAgeGrading** +
+__optional__|年龄分级|integer (int32)
+|**toanDeveloper** +
+__optional__|开发商|string
+|**toanEquipmentCore** +
+__optional__|适用机芯|string
+|**toanEquipmentCountry** +
+__optional__|适用国家|string
+|**toanEquipmentType** +
+__optional__|适用机型|string
+|**toanIcon** +
+__optional__|应用图标|string
+|**toanLanguage** +
+__optional__|语言|string
+|**toanLoadTotals** +
+__optional__|下载总量|integer (int32)
+|**toanName** +
+__optional__|应用名称|string
+|**toanPosterFirst** +
+__optional__|海报1|string
+|**toanPosterSecond** +
+__optional__|海报2|string
+|**toanPosterThird** +
+__optional__|海报3|string
+|**toanRemark** +
+__optional__|描述|string
+|**toanScore** +
+__optional__|评分|number (double)
+|**toanSize** +
+__optional__|应用大小|number (double)
+|**toanStatus** +
+__optional__|审核状态|integer (int32)
+|**toanType** +
+__optional__|应用分类|integer (int32)
+|**toanTypeName** +
+__optional__|应用分类名称|string
+|**toanUrl** +
+__optional__|APK/APP存放地址|string
+|**toanVersion** +
+__optional__|版本|string
+|===
+
+
+[[_applicationload]]
+=== ApplicationLoad
+app应用下载量类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**toalLoadNum** +
+__optional__|本周下载量|integer (int32)
+|**toalMonth** +
+__optional__|月|integer (int32)
+|**toalWeek** +
+__optional__|周|integer (int32)
+|**toalYear** +
+__optional__|年|integer (int32)
+|===
+
+
+[[_equip]]
+=== Equip
+设备信息类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**isenable** +
+__optional__|有效性|integer (int32)
+|**toeiDefaultScheme** +
+__optional__|设备默认方案id|integer (int32)
+|**toeiDefaultSchemeName** +
+__optional__|设备默认方案名称|string
+|**toeiEquipmentCode** +
+__optional__|设备编码|string
+|**toeiEquipmentCore** +
+__optional__|设备机芯|string
+|**toeiEquipmentCountry** +
+__optional__|设备使用国家|string
+|**toeiEquipmentCountryName** +
+__optional__|设备使用国家名称|string
+|**toeiEquipmentName** +
+__optional__|设备名称|string
+|**toeiEquipmentType** +
+__optional__|设备机型|string
+|**toeiRemark** +
+__optional__|备注|string
+|**toeiUseingScheme** +
+__optional__|设备使用主题id|integer (int32)
+|**toeiUseingSchemeName** +
+__optional__|设备使用主题名称|string
+|===
+
+
+[[_25ace99c7bfccf8d17a8f035a9b4bd2f]]
+=== HashMap«string,object»
+__Type__ : < string, object > map
+
+
+[[_0ab57a1dc6a504a53a0e4fe7401475d9]]
+=== HashMap«string,string»
+__Type__ : < string, string > map
+
+
+[[_loaddata]]
+=== LoadData
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**data** +
+__optional__|< <<_tdata,tData>> > array
+|**id** +
+__optional__|integer (int32)
+|**name** +
+__optional__|string
+|===
+
+
+[[_fe5293b8150fdf81185174959d77609c]]
+=== Map«string,string»
+__Type__ : < string, string > map
+
+
+[[_material]]
+=== Material
+素材类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**isenable** +
+__optional__|有效性|integer (int32)
+|**tomdClick** +
+__optional__|点击内容|string
+|**tomdClickType** +
+__optional__|点击事件|integer (int32)
+|**tomdClickTypeName** +
+__optional__|点击事件名称|string
+|**tomdName** +
+__optional__|标题名称|string
+|**tomdPosterUrl** +
+__optional__|海报储存url|string
+|**tomdRemark** +
+__optional__|素材描述|string
+|**tomdSize** +
+__optional__|布局|integer (int32)
+|**tomdSizeName** +
+__optional__|布局名称|string
+|**tomdType** +
+__optional__|素材类型|integer (int32)
+|**tomdTypeName** +
+__optional__|素材类型名称|string
+|**tomdVersion** +
+__optional__|素材版本|string
+|===
+
+
+[[_null]]
+=== Null
+__Type__ : object
+
+
+[[_415dd10353a8f1a5a57e81eed0cd4958]]
+=== PageInfo«Equip»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endRow** +
+__optional__|integer (int32)
+|**firstPage** +
+__optional__|integer (int32)
+|**hasNextPage** +
+__optional__|boolean
+|**hasPreviousPage** +
+__optional__|boolean
+|**isFirstPage** +
+__optional__|boolean
+|**isLastPage** +
+__optional__|boolean
+|**lastPage** +
+__optional__|integer (int32)
+|**list** +
+__optional__|< <<_equip,Equip>> > array
+|**navigateFirstPage** +
+__optional__|integer (int32)
+|**navigateLastPage** +
+__optional__|integer (int32)
+|**navigatePages** +
+__optional__|integer (int32)
+|**navigatepageNums** +
+__optional__|< integer (int32) > array
+|**nextPage** +
+__optional__|integer (int32)
+|**pageNum** +
+__optional__|integer (int32)
+|**pageSize** +
+__optional__|integer (int32)
+|**pages** +
+__optional__|integer (int32)
+|**prePage** +
+__optional__|integer (int32)
+|**size** +
+__optional__|integer (int32)
+|**startRow** +
+__optional__|integer (int32)
+|**total** +
+__optional__|integer (int64)
+|===
+
+
+[[_d6e171a6a714f7e1f249335b12646975]]
+=== PageInfo«HashMap«string,object»»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endRow** +
+__optional__|integer (int32)
+|**firstPage** +
+__optional__|integer (int32)
+|**hasNextPage** +
+__optional__|boolean
+|**hasPreviousPage** +
+__optional__|boolean
+|**isFirstPage** +
+__optional__|boolean
+|**isLastPage** +
+__optional__|boolean
+|**lastPage** +
+__optional__|integer (int32)
+|**list** +
+__optional__|< <<_25ace99c7bfccf8d17a8f035a9b4bd2f,HashMap«string,object»>> > array
+|**navigateFirstPage** +
+__optional__|integer (int32)
+|**navigateLastPage** +
+__optional__|integer (int32)
+|**navigatePages** +
+__optional__|integer (int32)
+|**navigatepageNums** +
+__optional__|< integer (int32) > array
+|**nextPage** +
+__optional__|integer (int32)
+|**pageNum** +
+__optional__|integer (int32)
+|**pageSize** +
+__optional__|integer (int32)
+|**pages** +
+__optional__|integer (int32)
+|**prePage** +
+__optional__|integer (int32)
+|**size** +
+__optional__|integer (int32)
+|**startRow** +
+__optional__|integer (int32)
+|**total** +
+__optional__|integer (int64)
+|===
+
+
+[[_acf6f900140e32b4130755a0e39a9ce4]]
+=== PageInfo«Material»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endRow** +
+__optional__|integer (int32)
+|**firstPage** +
+__optional__|integer (int32)
+|**hasNextPage** +
+__optional__|boolean
+|**hasPreviousPage** +
+__optional__|boolean
+|**isFirstPage** +
+__optional__|boolean
+|**isLastPage** +
+__optional__|boolean
+|**lastPage** +
+__optional__|integer (int32)
+|**list** +
+__optional__|< <<_material,Material>> > array
+|**navigateFirstPage** +
+__optional__|integer (int32)
+|**navigateLastPage** +
+__optional__|integer (int32)
+|**navigatePages** +
+__optional__|integer (int32)
+|**navigatepageNums** +
+__optional__|< integer (int32) > array
+|**nextPage** +
+__optional__|integer (int32)
+|**pageNum** +
+__optional__|integer (int32)
+|**pageSize** +
+__optional__|integer (int32)
+|**pages** +
+__optional__|integer (int32)
+|**prePage** +
+__optional__|integer (int32)
+|**size** +
+__optional__|integer (int32)
+|**startRow** +
+__optional__|integer (int32)
+|**total** +
+__optional__|integer (int64)
+|===
+
+
+[[_53c0ccd620174de7b1fa3788b1cb61e8]]
+=== PageInfo«Parameter»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endRow** +
+__optional__|integer (int32)
+|**firstPage** +
+__optional__|integer (int32)
+|**hasNextPage** +
+__optional__|boolean
+|**hasPreviousPage** +
+__optional__|boolean
+|**isFirstPage** +
+__optional__|boolean
+|**isLastPage** +
+__optional__|boolean
+|**lastPage** +
+__optional__|integer (int32)
+|**list** +
+__optional__|< <<_parameter,Parameter>> > array
+|**navigateFirstPage** +
+__optional__|integer (int32)
+|**navigateLastPage** +
+__optional__|integer (int32)
+|**navigatePages** +
+__optional__|integer (int32)
+|**navigatepageNums** +
+__optional__|< integer (int32) > array
+|**nextPage** +
+__optional__|integer (int32)
+|**pageNum** +
+__optional__|integer (int32)
+|**pageSize** +
+__optional__|integer (int32)
+|**pages** +
+__optional__|integer (int32)
+|**prePage** +
+__optional__|integer (int32)
+|**size** +
+__optional__|integer (int32)
+|**startRow** +
+__optional__|integer (int32)
+|**total** +
+__optional__|integer (int64)
+|===
+
+
+[[_4994708ea1e995db67c5e36e9a5fb662]]
+=== PageInfo«User»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**endRow** +
+__optional__|integer (int32)
+|**firstPage** +
+__optional__|integer (int32)
+|**hasNextPage** +
+__optional__|boolean
+|**hasPreviousPage** +
+__optional__|boolean
+|**isFirstPage** +
+__optional__|boolean
+|**isLastPage** +
+__optional__|boolean
+|**lastPage** +
+__optional__|integer (int32)
+|**list** +
+__optional__|< <<_user,User>> > array
+|**navigateFirstPage** +
+__optional__|integer (int32)
+|**navigateLastPage** +
+__optional__|integer (int32)
+|**navigatePages** +
+__optional__|integer (int32)
+|**navigatepageNums** +
+__optional__|< integer (int32) > array
+|**nextPage** +
+__optional__|integer (int32)
+|**pageNum** +
+__optional__|integer (int32)
+|**pageSize** +
+__optional__|integer (int32)
+|**pages** +
+__optional__|integer (int32)
+|**prePage** +
+__optional__|integer (int32)
+|**size** +
+__optional__|integer (int32)
+|**startRow** +
+__optional__|integer (int32)
+|**total** +
+__optional__|integer (int64)
+|===
+
+
+[[_parameter]]
+=== Parameter
+参数类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**codeCode** +
+__optional__|参数代码|string
+|**codeDesc** +
+__optional__|参数描述|string
+|**codeName** +
+__optional__|参数名称|string
+|**codeSeq** +
+__optional__|参数排序|integer (int32)
+|**codeType** +
+__optional__|参数类型|string
+|**codeTypeName** +
+__optional__|参数类型名称|string
+|**isenable** +
+__optional__|有效性|integer (int32)
+|===
+
+
+[[_abb12444f6ce768edeb1e701d21994f4]]
+=== Result«Null»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**code** +
+__optional__|string
+|**data** +
+__optional__|<<_null,Null>>
+|**msg** +
+__optional__|string
+|===
+
+
+[[_72839f641ce130c8a6904a9ec5cebbe6]]
+=== Result«object»
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**code** +
+__optional__|string
+|**data** +
+__optional__|object
+|**msg** +
+__optional__|string
+|===
+
+
+[[_scheme]]
+=== Scheme
+方案类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**isenable** +
+__optional__|有效性|integer (int32)
+|**schemeDetail** +
+__optional__||< <<_schemedetail,SchemeDetail>> > array
+|**toseCode** +
+__optional__|方案编码|string
+|**toseEquipmentCore** +
+__optional__|方案机芯|string
+|**toseEquipmentCountry** +
+__optional__|方案使用国家|string
+|**toseEquipmentType** +
+__optional__|方案机型|string
+|**toseLanguage** +
+__optional__|方案语言|string
+|**toseLevel** +
+__optional__|方案优先级|string
+|**toseName** +
+__optional__|方案名称|string
+|**toseRemark** +
+__optional__|备注|string
+|**toseStatus** +
+__optional__|状态|integer (int32)
+|**toseUnionCust** +
+__optional__|方案关联客户|string
+|**toseVersion** +
+__optional__|方案版本|string
+|===
+
+
+[[_schemedetail]]
+=== SchemeDetail
+方案明细类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**tosdModelId** +
+__optional__|方案模板id|integer (int32)
+|**tosdModelOrder** +
+__optional__|方案模板顺序|integer (int32)
+|**tosdRefId** +
+__optional__|方案素材id|string
+|**tosdRefType** +
+__optional__|方案素材类型|string
+|**tosdRefUrlList** +
+__optional__|方案素材海报存放地址|< string > array
+|**tosdToseId** +
+__optional__|方案主表id|integer (int32)
+|===
+
+
+[[_user]]
+=== User
+用户信息类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**isenable** +
+__optional__|有效性|integer (int32)
+|**tourAccount** +
+__optional__|用户账号|string
+|**tourAddress** +
+__optional__|用户地址|string
+|**tourEnglishName** +
+__optional__|用户英文名称|string
+|**tourFox** +
+__optional__|用户传真|string
+|**tourMail** +
+__optional__|用户邮箱|string
+|**tourName** +
+__optional__|用户名称|string
+|**tourPassword** +
+__optional__|用户密码|string
+|**tourSex** +
+__optional__|用户性别|integer (int32)
+|**tourTelphone** +
+__optional__|用户联系电话|string
+|**tourType** +
+__optional__|用户类型|integer (int32)
+|**tourTypeName** +
+__optional__|用户类型名称|string
+|===
+
+
+[[_tdata]]
+=== tData
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**tMonth** +
+__optional__|integer (int32)
+|**tNum** +
+__optional__|integer (int32)
+|**tWeek** +
+__optional__|integer (int32)
+|**tYear** +
+__optional__|integer (int32)
+|===
+
+
+
+
+

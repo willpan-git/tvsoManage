@@ -13,6 +13,7 @@
 		<result column="tose_level" property="toseLevel" jdbcType="INTEGER" />
 		<result column="tose_version" property="toseVersion" jdbcType="VARCHAR" />
 		<result column="tose_union_cust" property="toseUnionCust" jdbcType="VARCHAR" />
+		<result column="tose_union_custname" property="toseUnionCustName" jdbcType="VARCHAR" />
 		<result column="tose_remark" property="toseRemark" jdbcType="VARCHAR" />
 		<result column="tose_status" property="toseStatus" jdbcType="INTEGER" />
 		<result column="isenable" property="isenable" jdbcType="INTEGER" />
@@ -49,6 +50,7 @@
 		WHERE 1=1
 		<if test="toseCode != null and toseCode != ''"> AND tose_code LIKE CONCAT(#{toseCode},'%')</if>
 		<if test="toseName != null and toseName != ''"> AND tose_name LIKE CONCAT(#{toseName},'%')</if>
+		<if test="toseUnionCust != null and toseUnionCust != ''"> AND tose_union_cust = #{toseUnionCust}</if>
 		<if test="toseEquipmentCountry != null and toseEquipmentCountry != ''"> AND tose_equipment_country = #{toseEquipmentCountry}</if>
 		ORDER BY FIELD(m.tose_status,4,3,1,2) DESC,tose_code DESC
 	</select>
@@ -57,9 +59,10 @@
 	<select id="findSchemeById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		SELECT
 		tose_id,tose_code,tose_name,tose_equipment_core,tose_equipment_type,tose_equipment_country,
-		tose_language,tose_level,tose_version,tose_union_cust,tose_remark,tose_status,isenable
+		tose_language,tose_level,tose_version,tose_union_cust,tour.tour_name as tose_union_custname,tose_remark,tose_status,m.isenable
 		FROM
-		tvso_scheme
+		tvso_scheme m
+		LEFT JOIN tvso_user tour ON tour.tour_id = tose_union_cust
 		WHERE tose_id = #{toseId}
 	</select>
 
@@ -116,7 +119,9 @@
 	<!-- update scheme -->
 	<update id="updateScheme" parameterType="com.skyworth.entity.Scheme">
 		UPDATE tvso_scheme
-		SET tose_equipment_core = #{toseEquipmentCore},
+		SET 
+		tose_name = #{toseName},
+		tose_equipment_core = #{toseEquipmentCore},
 		tose_equipment_type = #{toseEquipmentType},
 		tose_equipment_country = #{toseEquipmentCountry},
 		tose_language = #{toseLanguage},
@@ -178,13 +183,22 @@
 	
 	<!-- get scheme cust suggest list -->
 	<select id="GetSchemeCustSug" parameterType="java.lang.String" resultType="HashMap">
-		SELECT distinct tose_union_cust as toseUnionCust ,
+		<!-- SELECT distinct tose_union_cust as toseUnionCust ,
 		(case when tose_union_cust = 'system' then '系统' else tour.tour_name end) as toseUnionCustName
 		FROM tvso_scheme m
 		LEFT JOIN tvso_user tour ON tour.tour_id = tose_union_cust
 		WHERE tose_union_cust != '' AND  tose_union_cust = 'system'
 		<if test="_parameter != null and _parameter != ''">  
-		AND (case when tose_union_cust = 'system' then '系统' else tour.tour_name end) LIKE CONCAT(#{_parameter},'%')</if> 
+		AND (case when tose_union_cust = 'system' then '系统' else tour.tour_name end) LIKE CONCAT(#{_parameter},'%')</if>  -->
+		SELECT toseUnionCust ,toseUnionCustName FROM (
+		SELECT '0' AS toseUnionCust, '系统' as toseUnionCustName
+		UNION ALL
+		SELECT tour_id as toseUnionCust, tour_name as toseUnionCustName
+		FROM tvso_user tour 
+		WHERE isenable = 1) t
+		WHERE 1=1 
+		<if test="_parameter != null and _parameter != ''">  
+		AND toseUnionCustName LIKE CONCAT(#{_parameter},'%')</if>
 		<if test="_parameter == null or _parameter == ''"> limit 10</if> 	
 	</select>
 	

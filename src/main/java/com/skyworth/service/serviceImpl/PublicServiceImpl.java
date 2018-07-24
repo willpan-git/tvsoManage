@@ -90,7 +90,14 @@ public class PublicServiceImpl implements PublicService {
 
     @Override
     public List<Map<String, String>> queryBaseType(String codeType) {
-	return publicMapper.queryBaseType(codeType);
+	try {
+	    return publicMapper.queryBaseType(codeType);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override

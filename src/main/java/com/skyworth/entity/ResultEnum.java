@@ -33,9 +33,12 @@ public enum ResultEnum {
     UpSuccess("0009","上架成功！"),
     DownSuccess("0010","下架成功！"),
     /**
-     * 未知异常. ErrorCode : 01
+     * TV设备调用异常. ErrorCode : 01
      */
     UnknownException("01","未知异常"),
+    ActionFailExceptionF("0101","获取设备信息失败！"),
+    ActionFailExceptionS("0102","服务器未响应！"),
+    ActionFailExceptionT("0103","执行异常，请联系管理员！"),
     /**
      * 系统异常. ErrorCode : 02
      */
@@ -61,6 +64,8 @@ public enum ResultEnum {
     UnknowMaterialException("0407","该素材信息不存在！"),
     
     ExistsEquipException("0408","该设备已存在！"),
+    
+    UnknowAdException("0409","该广告信息不存在！"),
     
     /**
      * 数据库操作异常. ErrorCode : 05

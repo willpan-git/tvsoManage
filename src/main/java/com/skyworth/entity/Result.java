@@ -3,6 +3,9 @@
  */
 package com.skyworth.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**   
 * Copyright: Copyright (c) 2018 skyworth
 * 
@@ -18,15 +21,19 @@ package com.skyworth.entity;
 *---------------------------------------------------------*
 * 2018年5月15日     Administrator           v1.0.0               修改原因
 */
+@ApiModel(description = "提示信息类")
 public class Result<T> {
 
     /** 错误码. */
+    @ApiModelProperty(value = "提示信息编码")
     private String code;
 
     /** 提示信息. */
+    @ApiModelProperty(value = "提示信息")
     private String msg;
 
     /** 具体的内容. */
+    @ApiModelProperty(value = "返回数据")
     private T data;
 
     public String getCode() {

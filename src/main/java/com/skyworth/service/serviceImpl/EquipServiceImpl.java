@@ -4,6 +4,7 @@
 package com.skyworth.service.serviceImpl;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skyworth.entity.Equip;
+import com.skyworth.entity.ResultEnum;
+import com.skyworth.exception.MyRuntimeException;
 import com.skyworth.mapper.EquipMapper;
 import com.skyworth.service.EquipService;
+import com.skyworth.util.LogUtil;
 
 /**
  * Copyright: Copyright (c) 2018 skyworth
@@ -35,70 +39,157 @@ public class EquipServiceImpl implements EquipService {
 
     @Override
     public List<Equip> queryEquipList(Map<String, Object> map) {
-	return equipMapper.queryEquipList(map);
+	try {
+	    return equipMapper.queryEquipList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public Equip findEquipById(Integer toeiId) {
-	return equipMapper.findEquipById(toeiId);
+	try {
+	    return equipMapper.findEquipById(toeiId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void addEquip(Equip equip) {
-	equipMapper.addEquip(equip);
+	try {
+	    equipMapper.addEquip(equip);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void updateEquip(Equip equip) {
-	equipMapper.updateEquip(equip);
+	try {
+	    equipMapper.updateEquip(equip);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void unableEquip(Integer toeiId) {
-	equipMapper.unableEquip(toeiId);
+	try {
+	    equipMapper.unableEquip(toeiId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void effectEquip(Integer toeiId) {
-	equipMapper.effectEquip(toeiId);
+	try {
+	    equipMapper.effectEquip(toeiId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void deleteEquip(Integer toeiId) {
-	equipMapper.deleteEquip(toeiId);
+	try {
+	    equipMapper.deleteEquip(toeiId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
-    public HashMap<String, Object> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType,
+    public Map<String, Map<String, Object>> getDefaultScheme(String toeiEquipmentCore, String toeiEquipmentType,
 	    String toeiEquipmentCountry) {
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map.put("toeiEquipmentCore", toeiEquipmentCore);
-	map.put("toeiEquipmentType", toeiEquipmentType);
-	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
-	return equipMapper.getDefaultScheme(map);
+	try {
+	    HashMap<String, Object> map = new HashMap<String, Object>();
+	    map.put("toeiEquipmentCore", toeiEquipmentCore);
+	    map.put("toeiEquipmentType", toeiEquipmentType);
+	    map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+
+	    Map<String, Map<String, Object>> tResultMap = new LinkedHashMap<String, Map<String, Object>>();
+	    HashMap<String, Object> tMap = new HashMap<String, Object>();
+	    tMap = equipMapper.getDefaultScheme(map);
+	    tResultMap.put("data", tMap);
+	    return tResultMap;
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
-    public HashMap<String, Object> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType,
+    public Map<String, Map<String, Object>> getSchemeList(String toeiEquipmentCore, String toeiEquipmentType,
 	    String toeiEquipmentCountry) {
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map.put("toeiEquipmentCore", toeiEquipmentCore);
-	map.put("toeiEquipmentType", toeiEquipmentType);
-	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
-	return equipMapper.getSchemeList(map);
+	try {
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("toeiEquipmentCore", toeiEquipmentCore);
+	    map.put("toeiEquipmentType", toeiEquipmentType);
+	    map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+
+	    Map<String, Map<String, Object>> tResultMap = new LinkedHashMap<String, Map<String, Object>>();
+	    HashMap<String, Object> tMap = new HashMap<String, Object>();
+	    tMap = equipMapper.getSchemeList(map);
+	    tResultMap.put("data", tMap);
+	    return tResultMap;
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public List<Map<String, String>> queryEquipByKey(String keyWord) {
-	return equipMapper.queryEquipByKey(keyWord);
+	try {
+	    return equipMapper.queryEquipByKey(keyWord);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
-    public String checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry) {
-	HashMap<String, Object> map = new HashMap<String, Object>();
-	map.put("toeiEquipmentCore", toeiEquipmentCore);
-	map.put("toeiEquipmentType", toeiEquipmentType);
-	map.put("toeiEquipmentCountry", toeiEquipmentCountry);
-	return equipMapper.checkEquipExists(map);
+    public Integer checkEquipExists(String toeiEquipmentCore, String toeiEquipmentType, String toeiEquipmentCountry) {
+	try {
+	    HashMap<String, Object> map = new HashMap<String, Object>();
+	    map.put("toeiEquipmentCore", toeiEquipmentCore);
+	    map.put("toeiEquipmentType", toeiEquipmentType);
+	    map.put("toeiEquipmentCountry", toeiEquipmentCountry);
+	    return equipMapper.checkEquipExists(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

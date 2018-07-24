@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skyworth.entity.Result;
+import com.skyworth.entity.ResultEnum;
 import com.skyworth.service.ActivitiService;
+import com.skyworth.util.LogUtil;
+import com.skyworth.util.ResultUtil;
 import com.skyworth.util.SessionUtil;
 
 import io.swagger.annotations.Api;
@@ -46,13 +50,16 @@ public class ActivitiController {
 	    @ApiImplicitParam(name = "mid", value = "单据主id", required = true, dataType = "String", paramType = "query"),
 	    @ApiImplicitParam(name = "result", value = "操作结构,通过为true,退回为false", required = true, dataType = "Boolean", paramType = "query") })
     @RequestMapping(value = { "/workflowReview" }, method = RequestMethod.POST)
-    public void workflowReview(String wfId,String mid,Boolean result) {
+    public Result<?> workflowReview(String wfId,String mid,Boolean result) {
 	// 根据session获取登入人账号
-
 	HttpSession session = SessionUtil.getSession();
-	System.out.println(session.getAttribute("activeUser"));
 	String user = session.getAttribute("activeUser").toString();
 	// 调用服务 
 	activitiService.completeTask(wfId, mid, user, result);
+	// 更新成功后打印日志信息
+	LogUtil.printLog("审核信息: 流程key-" + wfId + " 单据id-" + mid + " 通过-" + result + " 通过人-" + user);
+	// 更新成功提示信息(从枚举类里获取)
+	ResultEnum resultEnum = ResultEnum.SUCCESS;
+	return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
     }
 }

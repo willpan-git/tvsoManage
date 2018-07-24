@@ -44,5 +44,5 @@ public interface EquipMapper {
     
     List<Map<String, String>> queryEquipByKey(String keyWord);
     
-    String checkEquipExists(Map<String, Object> map);
+    Integer checkEquipExists(Map<String, Object> map);
 }

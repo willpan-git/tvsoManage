@@ -47,22 +47,50 @@ public class SchemeServiceImpl implements SchemeService {
 
     @Override
     public List<HashMap<String, Object>> querySchemeList(Map<String, Object> map) {
-	return schemeMapper.querySchemeList(map);
+	try {
+	    return schemeMapper.querySchemeList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public Scheme findSchemeById(Integer toseId) {
-	return schemeMapper.findSchemeById(toseId);
+	try {
+	    return schemeMapper.findSchemeById(toseId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public List<HashMap<String, String>> GetSchemeNameSug(String toseName) {
-	return schemeMapper.GetSchemeNameSug(toseName);
+	try {
+	    return schemeMapper.GetSchemeNameSug(toseName);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public List<HashMap<String, String>> GetSchemeCustSug(String custName) {
-	return schemeMapper.GetSchemeCustSug(custName);
+	try {
+	    return schemeMapper.GetSchemeCustSug(custName);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     // 新增方案
@@ -148,12 +176,27 @@ public class SchemeServiceImpl implements SchemeService {
     // 失效方案
     @Override
     public void unableScheme(Integer toseId) {
-	schemeMapper.unableScheme(toseId);
+	try {
+	    schemeMapper.unableScheme(toseId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     // 生效方案
     @Override
     public void effectScheme(Integer toseId) {
+	try {
+	    schemeMapper.effectScheme(toseId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override

@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +64,18 @@ public class PublicController {
     @ApiOperation(value = "查询下拉框数据", notes = "根据数据类型查询下拉框数据源")
     @ApiImplicitParam(name = "codeType", value = "参数类型", required = true, dataType = "String", paramType = "query")
     @RequestMapping(value = { "/queryBaseType" }, method = RequestMethod.GET)
-    public List<Map<String, String>> queryBaseType(String codeType) {
-	return publicService.queryBaseType(codeType);
+    public Result<?> queryBaseType(String codeType) {
+	try {
+	    // 返回信息
+	    ResultEnum resultEnum = ResultEnum.SUCCESS;
+	    return ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),
+		    publicService.queryBaseType(codeType));
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     /**
@@ -84,7 +92,7 @@ public class PublicController {
      */
     @ApiOperation(value = "上传附件功能", notes = "上传附件功能,返回文件存放路劲url")
     @PostMapping(value = { "/uploadFile" }, consumes = "multipart/*", headers = "content-type=multipart/form-data ")
-    public Result<Object> uploadFile(@ApiParam(value="上传的文件",required=true) @RequestParam("file") MultipartFile file) {
+    public Result<?> uploadFile(@ApiParam(value="上传的文件",required=true) @RequestParam("file") MultipartFile file) {
 	if (file.isEmpty()) {
 	    // 文件为空
 	    throw new MyRuntimeException(ResultEnum.UnknownFileException);

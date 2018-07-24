@@ -36,6 +36,10 @@ public class Equip {
     private String toeiEquipmentCountry;
     @ApiModelProperty(value = "设备使用国家名称")
     private String toeiEquipmentCountryName;
+    @ApiModelProperty(value = "设备开机广告id")
+    private Integer toeiAdvertisement;
+    @ApiModelProperty(value = "设备开机广告名称")
+    private String toeiAdvertisementName;
     @ApiModelProperty(value = "设备默认方案id")
     private Integer toeiDefaultScheme;
     @ApiModelProperty(value = "设备默认方案名称")
@@ -152,6 +156,36 @@ public class Equip {
      */
     public void setToeiEquipmentCountryName(String toeiEquipmentCountryName) {
         this.toeiEquipmentCountryName = toeiEquipmentCountryName;
+    }
+    
+    
+
+    /**
+     * @return the toeiAdvertisement
+     */
+    public Integer getToeiAdvertisement() {
+        return toeiAdvertisement;
+    }
+
+    /**
+     * @param toeiAdvertisement the toeiAdvertisement to set
+     */
+    public void setToeiAdvertisement(Integer toeiAdvertisement) {
+        this.toeiAdvertisement = toeiAdvertisement;
+    }
+
+    /**
+     * @return the toeiAdvertisementName
+     */
+    public String getToeiAdvertisementName() {
+        return toeiAdvertisementName;
+    }
+
+    /**
+     * @param toeiAdvertisementName the toeiAdvertisementName to set
+     */
+    public void setToeiAdvertisementName(String toeiAdvertisementName) {
+        this.toeiAdvertisementName = toeiAdvertisementName;
     }
 
     /**

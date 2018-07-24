@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.skyworth.mapper.TVMapper">
+	<resultMap id="BaseResultMap" type="com.skyworth.entity.TV">
+		<id column="toei_id" property="equipId" jdbcType="INTEGER" />
+		<collection property="adInfo" ofType="com.skyworth.entity.TV$AdInfo">
+            <result column="toat_id" property="adId" jdbcType="INTEGER"/>
+            <result column="toat_url" property="adUrl" jdbcType="VARCHAR"/>
+        </collection>
+		<collection property="schemeInfo" ofType="com.skyworth.entity.TV$SchemeInfo"
+			javaType="java.util.ArrayList" column="{default_id=toei_default_scheme,use_id=toei_useing_scheme}"  
+			select="querySchemeInfo">
+            <result column="tosd_model_id" property="modelId" jdbcType="INTEGER"/>
+            <result column="tosd_model_order" property="modelOrder" jdbcType="VARCHAR"/>
+            <collection property="modelDetail" ofType="com.skyworth.entity.TV$SchemeInfo$ModelDetail"
+			javaType="java.util.ArrayList" column="{type=tosd_ref_type,id=tosd_ref_id}" select="queryMaterialInfo">
+            	<result column="material_id" property="materialId" jdbcType="INTEGER"/>
+            	<result column="material_url" property="materialUrl" jdbcType="VARCHAR"/>
+            	<result column="material_order" property="materialOrder" jdbcType="VARCHAR"/>
+        	</collection>
+        </collection>
+	</resultMap>
+	
+	<!-- query tv info by equip id -->
+	<select id="queryTVInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		SELECT toei_id,toat_id,toat_url,toei_default_scheme,toei_useing_scheme
+		FROM tvso_equipment_info a
+		LEFT JOIN tvso_advertisement b ON b.toat_id = a.toei_advertisement
+		WHERE toei_id = #{equipId}
+	</select>
+	
+	<!-- query scheme info -->
+	<select id="querySchemeInfo" parameterType="java.lang.Integer" resultType="com.skyworth.entity.TV$SchemeInfo">
+		SELECT tosd_model_id,tosd_model_order,tosd_ref_id
+		FROM tvso_scheme_d 
+		WHERE 1=1
+		<choose>
+        <when test="default_id !=null and default_id != ''">
+            AND tosd_tose_id  = #{default_id}
+        </when>
+        <otherwise>
+            AND tosd_tose_id  = #{use_id}
+        </otherwise>
+    	</choose>	
+		ORDER BY tosd_model_order ASC
+	</select>
+	
+	<!-- query material info -->
+	<select id="queryMaterialInfo" parameterType="Map" resultType="com.skyworth.entity.TV$SchemeInfo$ModelDetail">
+		SET @rownum =0;
+		SELECT material_id,material_url,@rownum := @rownum +1 AS material_order FROM (
+		SELECT '1' as refType,tomd_id as material_id,tomd_poster_url as material_url
+		FROM tvso_material_data a
+		WHERE a.isenable = 1
+		UNION ALL 
+		SELECT '2' as refType,toan_id as material_id,toan_icon as material_url
+		FROM tvso_application b
+		WHERE b.isenable = 1 AND b.toan_status = 3) t
+        <foreach collection="id.split(',')"  item="id" index="i" open="WHERE (" close=")" separator="OR" >
+            (material_id = ${id} AND refType = substring_index(substring_index('${type}',',', ${i} + 1), ',', -1))
+        </foreach>
+         GROUP BY FIELD(t.`material_id`, 
+        <foreach item="id" collection="id.split(',')" separator="," >
+            ${id}
+        </foreach> )
+	</select>
+</mapper>

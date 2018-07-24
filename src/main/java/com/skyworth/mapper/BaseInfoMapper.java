@@ -37,4 +37,6 @@ public interface BaseInfoMapper {
     public Parameter findParameterById(Integer codeId);
     
     public List<Parameter> queryParameterList(Map<String, Object> map);
+    
+    Integer checkParameterExists(Map<String, Object> map);
 }

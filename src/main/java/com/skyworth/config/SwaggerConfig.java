@@ -38,7 +38,7 @@ public class SwaggerConfig {
 	return new Docket(DocumentationType.SWAGGER_2)
 		.apiInfo(buildApiInf()) // .apiInfo(apiInfo())
 		.select()
-		.apis(RequestHandlerSelectors.basePackage("com.skyworth.controller"))// 要注释的接口名
+		.apis(RequestHandlerSelectors.basePackage("com.skyworth.controller"))// 需要生成文档的包的位置
 		.paths(PathSelectors.any())
 		.build();
     }
@@ -50,6 +50,5 @@ public class SwaggerConfig {
 		.contact(new Contact("skyworth", "http://www.skyworth.com", ""))
 		.version("1.0")
 		.build();
-
     }
 }

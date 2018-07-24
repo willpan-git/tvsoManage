@@ -42,17 +42,38 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AdminUser findUserByAccount(String account) {
-	return userMapper.findUserByAccount(account);
+	try {
+	    return userMapper.findUserByAccount(account);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public User findUserById(Integer tourId) {
-	return userMapper.findUserById(tourId);
+	try {
+	    return userMapper.findUserById(tourId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public List<User> queryUserList(Map<String, Object> map) {
-	return userMapper.queryUserList(map);
+	try {
+	    return userMapper.queryUserList(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     // 开启事务
@@ -71,43 +92,89 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-	userMapper.updateUser(user);
+	try {
+	    userMapper.updateUser(user);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void updatePassword(String tourAccount, String tourPassword) {
+	try {
+	    HashMap<String, Object> map = new HashMap<String, Object>();
+	    map.put("tourAccount", tourAccount);
+	    map.put("tourPassword", tourPassword);
 
-	HashMap<String, Object> map = new HashMap<String, Object>();
-
-	map.put("tourAccount", tourAccount);
-
-	map.put("tourPassword", tourPassword);
-
-	userMapper.updatePassword(map);
+	    userMapper.updatePassword(map);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void unableUser(Integer tourId) {
-	userMapper.unableUser(tourId);
+	try {
+	    userMapper.unableUser(tourId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void effectUser(Integer tourId) {
-	userMapper.effectUser(tourId);
+	try {
+	    userMapper.effectUser(tourId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public void deleteUser(Integer tourId) {
-	userMapper.deleteUser(tourId);
+	try {
+	    userMapper.deleteUser(tourId);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public List<Map<String, String>> queryUserByKey(String keyWord) {
-	return userMapper.queryUserByKey(keyWord);
+	try {
+	    return userMapper.queryUserByKey(keyWord);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 
     @Override
     public boolean checkAccount(String account) {
-	return userMapper.checkAccount(account);
+	try {
+	    return userMapper.checkAccount(account);
+	} catch (Exception e) {
+	    // 打印错误日志
+	    LogUtil.printLog(e, Exception.class);
+	    // 抛出错误
+	    throw new MyRuntimeException(ResultEnum.DBException);
+	}
     }
 }

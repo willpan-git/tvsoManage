@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.skyworth.config;
+package com.skyworth.util;
 
 import java.io.IOException;
 

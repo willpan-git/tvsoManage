@@ -45,6 +45,8 @@ public class Scheme {
     private String toseVersion;
     @ApiModelProperty(value = "方案关联客户")
     private String toseUnionCust;
+    @ApiModelProperty(value = "方案关联客户名称")
+    private String toseUnionCustName;
     @ApiModelProperty(value = "备注")
     private String toseRemark;
     @ApiModelProperty(value = "状态")
@@ -206,6 +208,20 @@ public class Scheme {
      */
     public void setToseUnionCust(String toseUnionCust) {
 	this.toseUnionCust = toseUnionCust;
+    }
+    
+    /**
+     * @return the toseUnionCustName
+     */
+    public String getToseUnionCustName() {
+        return toseUnionCustName;
+    }
+
+    /**
+     * @param toseUnionCustName the toseUnionCustName to set
+     */
+    public void setToseUnionCustName(String toseUnionCustName) {
+        this.toseUnionCustName = toseUnionCustName;
     }
 
     /**

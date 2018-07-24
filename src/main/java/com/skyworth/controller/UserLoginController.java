@@ -3,8 +3,6 @@
  */
 package com.skyworth.controller;
 
-import javax.validation.constraints.Null;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -60,10 +58,10 @@ public class UserLoginController {
     @ApiResponses({ @ApiResponse(code = 0401, message = "该用户名不存在！"), @ApiResponse(code = 0402, message = "用户名或密码错误！"),
 	    @ApiResponse(code = 0403, message = "用户名已被锁定或失效，请联系管理员！") })
     @RequestMapping(value = { "/login" }, method = RequestMethod.POST)
-    public Result<Null> login(@RequestParam(value = "account") String account,
+    public Result<?> login(@RequestParam(value = "account") String account,
 	    @RequestParam("password") String password) {
 	// 结果信息
-	Result<Null> result = new Result<Null>();
+	Result<?> result = new Result<>();
 	// 创建Subject实例
 	Subject subject = SecurityUtils.getSubject();
 
@@ -77,7 +75,7 @@ public class UserLoginController {
 	    if (subject.isAuthenticated() == true) {
 		// 登入成功
 		ResultEnum resultEnum = ResultEnum.AdminSuccess;
-		result = ResultUtil.getMsg(resultEnum.getCode(), resultEnum.getMsg());
+		result = ResultUtil.getSuccess(resultEnum.getCode(), resultEnum.getMsg(),"");
 		// 打印到控制台
 		LogUtil.printLog(result.getMsg()+",登入用户: " + account);
 	    }

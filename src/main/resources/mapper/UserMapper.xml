@@ -140,7 +140,7 @@
 		FROM tvso_user
 		WHERE 1 = 1
 		]]>
-		<if test="_parameter != null and _parameter != ''"> AND locate( #{_parameter},tour_name) OR locate( #{_parameter},tour_account)</if>
+		<if test="_parameter != null and _parameter != ''"> AND locate(TRIM(#{_parameter}),tour_name) OR locate(TRIM(#{_parameter}),tour_account)</if>
 		<if test="_parameter == null or _parameter == ''"> limit 10</if>
 	</select>
 

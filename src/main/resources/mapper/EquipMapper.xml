@@ -10,6 +10,8 @@
 		<result column="toei_equipment_type" property="toeiEquipmentType" jdbcType="VARCHAR" />
 		<result column="toei_equipment_country" property="toeiEquipmentCountry" jdbcType="VARCHAR" />
 		<result column="toei_equipment_country_name" property="toeiEquipmentCountryName" jdbcType="VARCHAR" />
+		<result column="toei_advertisement" property="toeiAdvertisement" jdbcType="INTEGER" />
+		<result column="toei_advertisementname" property="toeiAdvertisementName" jdbcType="VARCHAR" />
 		<result column="toei_default_scheme" property="toeiDefaultScheme" jdbcType="INTEGER" />
 		<result column="toei_default_schemename" property="toeiDefaultSchemeName" jdbcType="VARCHAR" />
 		<result column="toei_useing_scheme" property="toeiUseingScheme" jdbcType="INTEGER" />
@@ -22,6 +24,7 @@
 		toei_id,
 		toei_equipment_name,toei_equipment_code,toei_equipment_core,toei_equipment_type,toei_equipment_country,
 		code.code_name as toei_equipment_country_name,
+		toei_advertisement, toat.toat_name as toei_advertisementname,
 		toei_default_scheme,tose.tose_name as toei_default_schemename,
 		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable,toei_remark
 
@@ -29,11 +32,12 @@
 		INNER JOIN tvso_parameter_code code ON code.code_code = toei.toei_equipment_country AND code.code_type = 'country'
 		LEFT JOIN tvso_scheme tose ON tose.tose_id = toei.toei_default_scheme
 		LEFT JOIN tvso_scheme tose2 ON tose2.tose_id = toei.toei_useing_scheme
+		LEFT JOIN tvso_advertisement toat ON toat.toat_id = toei_advertisement
 		WHERE 1=1
 		<if test="toeiEquipmentName != null and toeiEquipmentName != ''"> AND toei_equipment_name LIKE CONCAT(#{toeiEquipmentName},'%')</if>
 		<if test="toeiEquipmentCode != null and toeiEquipmentCode != ''"> AND toei_equipment_code LIKE CONCAT(#{toeiEquipmentCode},'%')</if>
 		<if test="toeiEquipmentCountry != null and toeiEquipmentCountry != ''"> AND toei_equipment_country = #{toeiEquipmentCountry}</if>
-		ORDER BY toei_equipment_code DESC
+		ORDER BY toei_id DESC
 	</select>
 	
 	<!-- fing equip by id -->
@@ -41,12 +45,14 @@
 		SELECT
 		toei_id,
 		toei_equipment_name,toei_equipment_code,toei_equipment_core,toei_equipment_type,toei_equipment_country,
+		toei_advertisement, toat.toat_name as toei_advertisementname,
 		toei_default_scheme,tose.tose_name as toei_default_schemename,
 		toei_useing_scheme,tose2.tose_name as toei_useing_schemename,toei.isenable,toei_remark
 
 		FROM tvso_equipment_info toei
 		LEFT JOIN tvso_scheme tose ON tose.tose_id = toei.toei_default_scheme
 		LEFT JOIN tvso_scheme tose2 ON tose2.tose_id = toei.toei_useing_scheme
+		LEFT JOIN tvso_advertisement toat ON toat.toat_id = toei_advertisement
 		WHERE toei_id = #{toeiId}
 	</select>
 
@@ -57,8 +63,10 @@
 		toei_equipment_code = #{toeiEquipmentCode},
 		toei_equipment_name = #{toeiEquipmentName},
 		toei_remark = #{toeiRemark},
+		toei_advertisement = #{toeiAdvertisement},
 		toei_default_scheme = #{toeiDefaultScheme},
 		toei_useing_scheme = #{toeiUseingScheme},
+		isenable = #{isenable},
 		modtime = now()
 		WHERE toei_id = #{toeiId}
 	</update>
@@ -68,10 +76,10 @@
 		INSERT INTO
 		tvso_equipment_info
 		(toei_equipment_name,toei_equipment_code,toei_equipment_core,toei_equipment_type,toei_equipment_country,
-		toei_default_scheme,toei_useing_scheme,toei_remark)
+		toei_advertisement,toei_default_scheme,toei_useing_scheme,toei_remark,isenable)
 		VALUES
 		(#{toeiEquipmentName},#{toeiEquipmentCode},#{toeiEquipmentCore},#{toeiEquipmentType},#{toeiEquipmentCountry},
-		#{toeiDefaultScheme},#{toeiUseingScheme},#{toeiRemark})
+		#{toeiAdvertisement},#{toeiDefaultScheme},#{toeiUseingScheme},#{toeiRemark},#{isenable})
 	</insert>
 
 	<!-- delete equip -->
@@ -102,18 +110,18 @@
 		CONCAT(toei_equipment_name ,'(',toei_equipment_code ,')') as tourName , toei_equipment_code as tourAccount
 		FROM tvso_equipment_info
 		WHERE 1 = 1
-		<if test="_parameter != null and _parameter != ''"> AND locate( #{_parameter},toei_equipment_name) OR  locate( #{_parameter},toei_equipment_code)</if>
+		<if test="_parameter != null and _parameter != ''"> AND locate(TRIM(#{_parameter}),toei_equipment_name) OR  locate(TRIM(#{_parameter}),toei_equipment_code)</if>
 		<if test="_parameter == null or _parameter == ''"> limit 10</if> 
 	</select>
 	
 	<!-- get defaultScheme -->
-	<select id="getDefaultScheme" resultType="java.util.Map" parameterType="java.util.Map">
+	<select id="getDefaultScheme" resultType="java.util.HashMap" parameterType="java.util.Map">
 		SELECT tose_id as toseId, tose_name as toseName
 		FROM tvso_scheme
 		WHERE tose_equipment_core = #{toeiEquipmentCore}
 		AND tose_equipment_type = #{toeiEquipmentType}
 		AND tose_equipment_country = #{toeiEquipmentCountry}
-		AND tose_union_cust = 'system' AND isenable = 1 AND tose_status = 3
+		AND tose_union_cust = '0' AND isenable = 1 AND tose_status = 3
 		ORDER BY tose_version DESC, tose_level DESC
 		limit 1
 	</select>
@@ -126,14 +134,14 @@
 		AND tose_equipment_core = #{toeiEquipmentCore}
 		AND tose_equipment_type = #{toeiEquipmentType}
 		AND tose_equipment_country = #{toeiEquipmentCountry}
-		AND isenable = 1 AND tose_status = 3
+		AND isenable = 1 AND tose_status = 3 AND tose_union_cust != '0'
 		ORDER BY tose_version DESC, tose_level DESC
 		limit 1
 	</select>
 	
 	<!-- check equip exists -->
-	<select id="checkEquipExists" resultType="java.lang.String" parameterType="java.util.Map">
-		SELECT toei_equipment_code FROM tvso_equipment_info
+	<select id="checkEquipExists" resultType="int" parameterType="java.util.Map">
+		SELECT toei_id FROM tvso_equipment_info
 		WHERE toei_equipment_core = #{toeiEquipmentCore}
 		AND toei_equipment_type = #{toeiEquipmentType}
 		AND toei_equipment_country = #{toeiEquipmentCountry}

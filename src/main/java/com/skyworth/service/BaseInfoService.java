@@ -36,4 +36,6 @@ public interface BaseInfoService {
     Parameter findParameterById(Integer codeId);
 
     List<Parameter> queryParameterList(Map<String, Object> map);
+    
+    Integer checkParameterExists(String codeType, String codeCode);
 }
