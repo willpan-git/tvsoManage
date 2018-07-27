@@ -104,7 +104,7 @@ public class PublicController {
 	// 文件保存路径 (静态资源映射到该地址)
 	DateFormat df = new SimpleDateFormat("yyyyMM"); 
         Calendar calendar = Calendar.getInstance();     
-	String filePath = loadpath +"/"+ df.format(calendar.getTime()) +"/";
+	String filePath = loadpath + File.separator + df.format(calendar.getTime()) + File.separator ;
 	
 	// 获得文件后缀
 	String suf = file.getOriginalFilename().split("\\.")[file.getOriginalFilename().split("\\.").length - 1];

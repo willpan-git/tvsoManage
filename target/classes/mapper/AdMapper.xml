@@ -12,7 +12,7 @@
 	</resultMap>
 	
 	<!-- query advertisement list-->
-	<select id="queryAdvertisementList" resultType="com.skyworth.entity.Advertisement"
+	<select id="queryAdvertisementList" resultMap="BaseResultMap"
 		parameterType="Map">
 		SELECT toat_id ,toat_name, toat_url , toat_duration, toat_format, toat_remark,isenable
 		FROM tvso_advertisement
@@ -22,7 +22,7 @@
 	</select>
 	
 	<!-- query advertisement by id -->
-	<select id="queryAdvertisementById" resultType="com.skyworth.entity.Advertisement"
+	<select id="queryAdvertisementById" resultMap="BaseResultMap"
 		parameterType="java.lang.Integer">
 		SELECT toat_id ,toat_name, toat_url , toat_duration, toat_format, toat_remark,isenable
 		FROM tvso_advertisement

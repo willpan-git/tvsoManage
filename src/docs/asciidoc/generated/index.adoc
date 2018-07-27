@@ -32,11 +32,13 @@ __BasePath__ : /
 * APP : 应用管理API
 * Activiti : 流程管理API
 * Admin : 用户登入API
+* Advertisement : 广告管理API
 * BaseInfo : 基础数据管理API
 * Equipment : 设备管理API
 * Material : 素材管理API
 * Public : 公共方法API
 * Scheme : 方案管理API
+* TV : TV设备API
 * User : 用户管理API
 
 
@@ -75,7 +77,7 @@ __required__|流程key,例：SchemeProcess|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -96,6 +98,233 @@ __required__|流程key,例：SchemeProcess|string
 ==== Tags
 
 * Activiti
+
+
+[[_addadvertisementusingpost]]
+=== 新增广告
+....
+POST /tvmanage/advertisement/addAdvertisement
+....
+
+
+==== Description
+根据广告类新增广告
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**advertisement** +
+__required__|广告类|<<_advertisement,Advertisement>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Advertisement
+
+
+[[_deleteadvertisementusingdelete]]
+=== 删除广告
+....
+DELETE /tvmanage/advertisement/deleteAdvertisement
+....
+
+
+==== Description
+根据广告id删除广告
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toatId** +
+__required__|广告id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**204**|No Content|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Advertisement
+
+
+[[_queryadvertisementbyidusingget]]
+=== 根据广告id查询广告相关信息
+....
+GET /tvmanage/advertisement/queryAdvertisementById
+....
+
+
+==== Description
+根据广告id查询广告相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**toatId** +
+__required__|广告id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Advertisement
+
+
+[[_queryparameterlistusingget]]
+=== 查询广告列表
+....
+GET /tvmanage/advertisement/queryAdvertisementList
+....
+
+
+==== Description
+返回信息中包含分页的相关信息，json格式
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**map** +
+__optional__|多种查询条件|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Advertisement
+
+
+[[_updateadvertisementusingpost]]
+=== 修改广告相关信息
+....
+POST /tvmanage/advertisement/updateAdvertisement
+....
+
+
+==== Description
+修改广告相关信息
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Body**|**advertisement** +
+__required__|广告类|<<_advertisement,Advertisement>>
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* Advertisement
 
 
 [[_addapplicationusingpost]]
@@ -124,7 +353,7 @@ __required__|应用实体类|<<_application,Application>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -173,7 +402,7 @@ __required__|应用id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -216,7 +445,7 @@ __required__|应用id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -265,7 +494,7 @@ __required__|应用id集合,例 10,11,12|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_loaddata,LoadData>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -308,7 +537,7 @@ __required__|应用id集合,例 10,11,12|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_loaddata,LoadData>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -341,7 +570,7 @@ GET /tvmanage/app/queryAppTypePercentList
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_25ace99c7bfccf8d17a8f035a9b4bd2f,HashMap«string,object»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -375,7 +604,7 @@ GET /tvmanage/app/queryApplicationById
 |===
 |Type|Name|Description|Schema
 |**Query**|**toanId** +
-__required__|应用id|ref
+__required__|应用id|integer (int32)
 |===
 
 
@@ -384,7 +613,7 @@ __required__|应用id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_application,Application>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -427,7 +656,7 @@ __optional__|查询条件：应用类型，应用名称|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -470,7 +699,7 @@ __required__|应用id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -519,58 +748,7 @@ __required__|应用实体类|<<_application,Application>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
-|**201**|Created|No Content
-|**401**|Unauthorized|No Content
-|**403**|Forbidden|No Content
-|**404**|Not Found|No Content
-|===
-
-
-==== Consumes
-
-* `application/json`
-
-
-==== Produces
-
-* `\*/*`
-
-
-==== Tags
-
-* APP
-
-
-[[_updateapplicationloadusingpost]]
-=== 应用每下载一次更新下载数量
-....
-POST /tvmanage/app/updateApplicationLoad
-....
-
-
-==== Description
-应用每下载一次更新下载数量
-
-
-==== Parameters
-
-[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
-|===
-|Type|Name|Description|Schema
-|**Query**|**dateStr** +
-__required__|当前日期，例：2018-06-14|string
-|**Query**|**toanId** +
-__required__|应用id|ref
-|===
-
-
-==== Responses
-
-[options="header", cols=".^2a,.^14a,.^4a"]
-|===
-|HTTP Code|Description|Schema
-|**200**|OK|No Content
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -619,7 +797,7 @@ __required__|参数类|<<_parameter,Parameter>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -668,7 +846,7 @@ __required__|参数id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -711,7 +889,7 @@ __required__|参数id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -760,7 +938,7 @@ __required__|参数id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_parameter,Parameter>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -777,7 +955,7 @@ __required__|参数id|ref
 * BaseInfo
 
 
-[[_queryparameterlistusingget]]
+[[_queryparameterlistusingget_1]]
 === 查询参数列表
 ....
 GET /tvmanage/baseinfo/queryParameterList
@@ -803,7 +981,7 @@ __optional__|多种查询条件|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_53c0ccd620174de7b1fa3788b1cb61e8,PageInfo«Parameter»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -846,7 +1024,7 @@ __required__|参数id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -895,7 +1073,7 @@ __required__|参数类|<<_parameter,Parameter>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -944,7 +1122,7 @@ __required__|设备详细实体equip|<<_equip,Equip>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -993,7 +1171,7 @@ __required__|设备id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1036,7 +1214,7 @@ __required__|设备id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1085,7 +1263,7 @@ __required__|设备id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_equip,Equip>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1132,7 +1310,7 @@ __required__|设备机型|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< string, < string, object > map > map
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1179,7 +1357,7 @@ __required__|设备机型|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< string, < string, object > map > map
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1222,7 +1400,7 @@ __optional__|模糊查询关键字|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1265,7 +1443,7 @@ __optional__|多种查询条件|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_415dd10353a8f1a5a57e81eed0cd4958,PageInfo«Equip»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1308,7 +1486,7 @@ __required__|设备id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1357,7 +1535,7 @@ __required__|设备详细实体equip|<<_equip,Equip>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1406,7 +1584,7 @@ __required__|素材详细实体类material|<<_material,Material>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1455,7 +1633,7 @@ __required__|素材id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1498,7 +1676,7 @@ __required__|素材id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1547,7 +1725,7 @@ __required__|素材id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_material,Material>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1590,7 +1768,7 @@ __optional__|多种查询条件|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_acf6f900140e32b4130755a0e39a9ce4,PageInfo«Material»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1633,7 +1811,7 @@ __required__|素材id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1682,7 +1860,7 @@ __required__|素材详细实体类material|<<_material,Material>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -1731,7 +1909,7 @@ __required__|参数类型|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1823,7 +2001,7 @@ __optional__|客户名称|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_0ab57a1dc6a504a53a0e4fe7401475d9,HashMap«string,string»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1866,7 +2044,7 @@ __optional__|查询条件：materialType 类型；materialName 名称；pageNum 
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1909,7 +2087,7 @@ __optional__|方案名称|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_0ab57a1dc6a504a53a0e4fe7401475d9,HashMap«string,string»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -1952,7 +2130,7 @@ __required__|方案实体类|<<_scheme,Scheme>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2001,7 +2179,7 @@ __required__|方案id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2044,7 +2222,7 @@ __required__|方案id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2093,7 +2271,7 @@ __required__|方案id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_scheme,Scheme>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2136,7 +2314,7 @@ __optional__|多种查询条件|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_d6e171a6a714f7e1f249335b12646975,PageInfo«HashMap«string,object»»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2179,7 +2357,7 @@ __required__|方案实体类|<<_scheme,Scheme>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2228,7 +2406,7 @@ __required__|方案id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2277,7 +2455,7 @@ __required__|方案实体类|<<_scheme,Scheme>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2298,6 +2476,107 @@ __required__|方案实体类|<<_scheme,Scheme>>
 ==== Tags
 
 * Scheme
+
+
+[[_actionusingget]]
+=== TV开机数据服务
+....
+GET /tvmanage/tv/action
+....
+
+
+==== Description
+根据机芯、机型、使用国家获取开机广告，界面显示方案
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**core** +
+__required__|机芯|string
+|**Query**|**country** +
+__required__|使用国家|string
+|**Query**|**type** +
+__required__|机型|string
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|**65**|获取设备信息失败！|No Content
+|**66**|服务器未响应！|No Content
+|**67**|执行异常，请联系管理员！|No Content
+|===
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* TV
+
+
+[[_updateapplicationloadusingpost]]
+=== 应用每下载一次更新下载数量
+....
+POST /tvmanage/tv/updateApplicationLoad
+....
+
+
+==== Description
+应用每下载一次更新下载数量
+
+
+==== Parameters
+
+[options="header", cols=".^2a,.^3a,.^9a,.^4a"]
+|===
+|Type|Name|Description|Schema
+|**Query**|**dateStr** +
+__required__|当前日期，例：2018-06-14|string
+|**Query**|**toanId** +
+__required__|应用id|ref
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2a,.^14a,.^4a"]
+|===
+|HTTP Code|Description|Schema
+|**200**|OK|No Content
+|**201**|Created|No Content
+|**401**|Unauthorized|No Content
+|**403**|Forbidden|No Content
+|**404**|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `\*/*`
+
+
+==== Tags
+
+* TV
 
 
 [[_adduserusingpost]]
@@ -2326,7 +2605,7 @@ __required__|用户详细实体user|<<_user,User>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2375,7 +2654,7 @@ __required__|检索关键字|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|boolean
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2418,7 +2697,7 @@ __required__|用户id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**204**|No Content|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2461,7 +2740,7 @@ __required__|用户id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2510,7 +2789,7 @@ __required__|用户id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_user,User>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2555,11 +2834,11 @@ __required__|用户密码|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
-|**257**|该用户名不存在！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
-|**258**|用户名或密码错误！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
-|**259**|用户名已被锁定或失效，请联系管理员！|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**257**|该用户名不存在！|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**258**|用户名或密码错误！|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
+|**259**|用户名已被锁定或失效，请联系管理员！|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2607,7 +2886,7 @@ __optional__|检索关键字|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|< <<_fe5293b8150fdf81185174959d77609c,Map«string,string»>> > array
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2650,7 +2929,7 @@ __optional__|多种查询条件|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_4994708ea1e995db67c5e36e9a5fb662,PageInfo«User»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
 |**404**|Not Found|No Content
@@ -2693,7 +2972,7 @@ __required__|用户id|ref
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2748,7 +3027,7 @@ __required__|新密码|string
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2797,7 +3076,7 @@ __required__|用户详细实体user|<<_user,User>>
 [options="header", cols=".^2a,.^14a,.^4a"]
 |===
 |HTTP Code|Description|Schema
-|**200**|OK|<<_abb12444f6ce768edeb1e701d21994f4,Result«Null»>>
+|**200**|OK|<<_72839f641ce130c8a6904a9ec5cebbe6,Result«object»>>
 |**201**|Created|No Content
 |**401**|Unauthorized|No Content
 |**403**|Forbidden|No Content
@@ -2824,6 +3103,29 @@ __required__|用户详细实体user|<<_user,User>>
 
 [[_definitions]]
 == Definitions
+
+[[_advertisement]]
+=== Advertisement
+广告应用类
+
+
+[options="header", cols=".^3a,.^11a,.^4a"]
+|===
+|Name|Description|Schema
+|**isenable** +
+__optional__|有效性|integer (int32)
+|**toatDuration** +
+__optional__|广告时长|<<_time,Time>>
+|**toatFormat** +
+__optional__|广告格式|string
+|**toatName** +
+__optional__|广告名称|string
+|**toatRemark** +
+__optional__|广告描述|string
+|**toatUrl** +
+__optional__|广告存放地址|string
+|===
+
 
 [[_application]]
 === Application
@@ -2909,6 +3211,10 @@ __optional__|年|integer (int32)
 |Name|Description|Schema
 |**isenable** +
 __optional__|有效性|integer (int32)
+|**toeiAdvertisement** +
+__optional__|设备开机广告id|integer (int32)
+|**toeiAdvertisementName** +
+__optional__|设备开机广告名称|string
 |**toeiDefaultScheme** +
 __optional__|设备默认方案id|integer (int32)
 |**toeiDefaultSchemeName** +
@@ -2932,36 +3238,6 @@ __optional__|设备使用主题id|integer (int32)
 |**toeiUseingSchemeName** +
 __optional__|设备使用主题名称|string
 |===
-
-
-[[_25ace99c7bfccf8d17a8f035a9b4bd2f]]
-=== HashMap«string,object»
-__Type__ : < string, object > map
-
-
-[[_0ab57a1dc6a504a53a0e4fe7401475d9]]
-=== HashMap«string,string»
-__Type__ : < string, string > map
-
-
-[[_loaddata]]
-=== LoadData
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**data** +
-__optional__|< <<_tdata,tData>> > array
-|**id** +
-__optional__|integer (int32)
-|**name** +
-__optional__|string
-|===
-
-
-[[_fe5293b8150fdf81185174959d77609c]]
-=== Map«string,string»
-__Type__ : < string, string > map
 
 
 [[_material]]
@@ -2999,256 +3275,6 @@ __optional__|素材版本|string
 |===
 
 
-[[_null]]
-=== Null
-__Type__ : object
-
-
-[[_415dd10353a8f1a5a57e81eed0cd4958]]
-=== PageInfo«Equip»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**endRow** +
-__optional__|integer (int32)
-|**firstPage** +
-__optional__|integer (int32)
-|**hasNextPage** +
-__optional__|boolean
-|**hasPreviousPage** +
-__optional__|boolean
-|**isFirstPage** +
-__optional__|boolean
-|**isLastPage** +
-__optional__|boolean
-|**lastPage** +
-__optional__|integer (int32)
-|**list** +
-__optional__|< <<_equip,Equip>> > array
-|**navigateFirstPage** +
-__optional__|integer (int32)
-|**navigateLastPage** +
-__optional__|integer (int32)
-|**navigatePages** +
-__optional__|integer (int32)
-|**navigatepageNums** +
-__optional__|< integer (int32) > array
-|**nextPage** +
-__optional__|integer (int32)
-|**pageNum** +
-__optional__|integer (int32)
-|**pageSize** +
-__optional__|integer (int32)
-|**pages** +
-__optional__|integer (int32)
-|**prePage** +
-__optional__|integer (int32)
-|**size** +
-__optional__|integer (int32)
-|**startRow** +
-__optional__|integer (int32)
-|**total** +
-__optional__|integer (int64)
-|===
-
-
-[[_d6e171a6a714f7e1f249335b12646975]]
-=== PageInfo«HashMap«string,object»»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**endRow** +
-__optional__|integer (int32)
-|**firstPage** +
-__optional__|integer (int32)
-|**hasNextPage** +
-__optional__|boolean
-|**hasPreviousPage** +
-__optional__|boolean
-|**isFirstPage** +
-__optional__|boolean
-|**isLastPage** +
-__optional__|boolean
-|**lastPage** +
-__optional__|integer (int32)
-|**list** +
-__optional__|< <<_25ace99c7bfccf8d17a8f035a9b4bd2f,HashMap«string,object»>> > array
-|**navigateFirstPage** +
-__optional__|integer (int32)
-|**navigateLastPage** +
-__optional__|integer (int32)
-|**navigatePages** +
-__optional__|integer (int32)
-|**navigatepageNums** +
-__optional__|< integer (int32) > array
-|**nextPage** +
-__optional__|integer (int32)
-|**pageNum** +
-__optional__|integer (int32)
-|**pageSize** +
-__optional__|integer (int32)
-|**pages** +
-__optional__|integer (int32)
-|**prePage** +
-__optional__|integer (int32)
-|**size** +
-__optional__|integer (int32)
-|**startRow** +
-__optional__|integer (int32)
-|**total** +
-__optional__|integer (int64)
-|===
-
-
-[[_acf6f900140e32b4130755a0e39a9ce4]]
-=== PageInfo«Material»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**endRow** +
-__optional__|integer (int32)
-|**firstPage** +
-__optional__|integer (int32)
-|**hasNextPage** +
-__optional__|boolean
-|**hasPreviousPage** +
-__optional__|boolean
-|**isFirstPage** +
-__optional__|boolean
-|**isLastPage** +
-__optional__|boolean
-|**lastPage** +
-__optional__|integer (int32)
-|**list** +
-__optional__|< <<_material,Material>> > array
-|**navigateFirstPage** +
-__optional__|integer (int32)
-|**navigateLastPage** +
-__optional__|integer (int32)
-|**navigatePages** +
-__optional__|integer (int32)
-|**navigatepageNums** +
-__optional__|< integer (int32) > array
-|**nextPage** +
-__optional__|integer (int32)
-|**pageNum** +
-__optional__|integer (int32)
-|**pageSize** +
-__optional__|integer (int32)
-|**pages** +
-__optional__|integer (int32)
-|**prePage** +
-__optional__|integer (int32)
-|**size** +
-__optional__|integer (int32)
-|**startRow** +
-__optional__|integer (int32)
-|**total** +
-__optional__|integer (int64)
-|===
-
-
-[[_53c0ccd620174de7b1fa3788b1cb61e8]]
-=== PageInfo«Parameter»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**endRow** +
-__optional__|integer (int32)
-|**firstPage** +
-__optional__|integer (int32)
-|**hasNextPage** +
-__optional__|boolean
-|**hasPreviousPage** +
-__optional__|boolean
-|**isFirstPage** +
-__optional__|boolean
-|**isLastPage** +
-__optional__|boolean
-|**lastPage** +
-__optional__|integer (int32)
-|**list** +
-__optional__|< <<_parameter,Parameter>> > array
-|**navigateFirstPage** +
-__optional__|integer (int32)
-|**navigateLastPage** +
-__optional__|integer (int32)
-|**navigatePages** +
-__optional__|integer (int32)
-|**navigatepageNums** +
-__optional__|< integer (int32) > array
-|**nextPage** +
-__optional__|integer (int32)
-|**pageNum** +
-__optional__|integer (int32)
-|**pageSize** +
-__optional__|integer (int32)
-|**pages** +
-__optional__|integer (int32)
-|**prePage** +
-__optional__|integer (int32)
-|**size** +
-__optional__|integer (int32)
-|**startRow** +
-__optional__|integer (int32)
-|**total** +
-__optional__|integer (int64)
-|===
-
-
-[[_4994708ea1e995db67c5e36e9a5fb662]]
-=== PageInfo«User»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**endRow** +
-__optional__|integer (int32)
-|**firstPage** +
-__optional__|integer (int32)
-|**hasNextPage** +
-__optional__|boolean
-|**hasPreviousPage** +
-__optional__|boolean
-|**isFirstPage** +
-__optional__|boolean
-|**isLastPage** +
-__optional__|boolean
-|**lastPage** +
-__optional__|integer (int32)
-|**list** +
-__optional__|< <<_user,User>> > array
-|**navigateFirstPage** +
-__optional__|integer (int32)
-|**navigateLastPage** +
-__optional__|integer (int32)
-|**navigatePages** +
-__optional__|integer (int32)
-|**navigatepageNums** +
-__optional__|< integer (int32) > array
-|**nextPage** +
-__optional__|integer (int32)
-|**pageNum** +
-__optional__|integer (int32)
-|**pageSize** +
-__optional__|integer (int32)
-|**pages** +
-__optional__|integer (int32)
-|**prePage** +
-__optional__|integer (int32)
-|**size** +
-__optional__|integer (int32)
-|**startRow** +
-__optional__|integer (int32)
-|**total** +
-__optional__|integer (int64)
-|===
-
-
 [[_parameter]]
 === Parameter
 参数类
@@ -3274,33 +3300,20 @@ __optional__|有效性|integer (int32)
 |===
 
 
-[[_abb12444f6ce768edeb1e701d21994f4]]
-=== Result«Null»
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**code** +
-__optional__|string
-|**data** +
-__optional__|<<_null,Null>>
-|**msg** +
-__optional__|string
-|===
-
-
 [[_72839f641ce130c8a6904a9ec5cebbe6]]
 === Result«object»
+提示信息类
 
-[options="header", cols=".^3a,.^4a"]
+
+[options="header", cols=".^3a,.^11a,.^4a"]
 |===
-|Name|Schema
+|Name|Description|Schema
 |**code** +
-__optional__|string
+__optional__|提示信息编码|string
 |**data** +
-__optional__|object
+__optional__|返回数据|object
 |**msg** +
-__optional__|string
+__optional__|提示信息|string
 |===
 
 
@@ -3336,6 +3349,8 @@ __optional__|备注|string
 __optional__|状态|integer (int32)
 |**toseUnionCust** +
 __optional__|方案关联客户|string
+|**toseUnionCustName** +
+__optional__|方案关联客户名称|string
 |**toseVersion** +
 __optional__|方案版本|string
 |===
@@ -3361,6 +3376,33 @@ __optional__|方案素材类型|string
 __optional__|方案素材海报存放地址|< string > array
 |**tosdToseId** +
 __optional__|方案主表id|integer (int32)
+|===
+
+
+[[_time]]
+=== Time
+
+[options="header", cols=".^3a,.^4a"]
+|===
+|Name|Schema
+|**date** +
+__optional__|integer (int32)
+|**day** +
+__optional__|integer (int32)
+|**hours** +
+__optional__|integer (int32)
+|**minutes** +
+__optional__|integer (int32)
+|**month** +
+__optional__|integer (int32)
+|**seconds** +
+__optional__|integer (int32)
+|**time** +
+__optional__|integer (int64)
+|**timezoneOffset** +
+__optional__|integer (int32)
+|**year** +
+__optional__|integer (int32)
 |===
 
 
@@ -3396,23 +3438,6 @@ __optional__|用户联系电话|string
 __optional__|用户类型|integer (int32)
 |**tourTypeName** +
 __optional__|用户类型名称|string
-|===
-
-
-[[_tdata]]
-=== tData
-
-[options="header", cols=".^3a,.^4a"]
-|===
-|Name|Schema
-|**tMonth** +
-__optional__|integer (int32)
-|**tNum** +
-__optional__|integer (int32)
-|**tWeek** +
-__optional__|integer (int32)
-|**tYear** +
-__optional__|integer (int32)
 |===
 
 
